@@ -1,4 +1,4 @@
-import Svg, { Path, G } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 
 export default function Note(props: any) {
   return (

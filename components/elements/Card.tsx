@@ -1,4 +1,3 @@
-import { Link } from 'expo-router';
 import { View } from 'react-native';
 import { PropsWithChildren } from 'react';
 

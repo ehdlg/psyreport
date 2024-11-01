@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
 import Card from './elements/Card';
-import { Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Note from './icons/Note';
 import NoteList from './icons/NoteList';
 
