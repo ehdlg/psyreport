@@ -25,13 +25,13 @@ const Help = () => {
 
 const CardLinks = () => {
   return (
-    <View className='flex-row gap-x-2 justify-around my-8'>
-      <Card href='/new' styles='justify-center items-center gap-y-4'>
-        <Note width={80} height={80} />
+    <View className='flex-row gap-x-2 justify-center'>
+      <Card href='/new' styles='justify-center items-center gap-y-4 flex-1'>
+        <Note width={80} height={80} fill='#a5b4fc' />
         <Text className='text-neutral-500'>Nuevo registro</Text>
       </Card>
-      <Card href='/new' styles='justify-center items-center gap-y-4'>
-        <NoteList width={80} height={80} />
+      <Card href='/new' styles='justify-center items-center gap-y-4 flex-1'>
+        <NoteList width={80} height={80} fill='#a5b4fc' />
         <Text className='text-neutral-500'>Ver registros</Text>
       </Card>
     </View>
