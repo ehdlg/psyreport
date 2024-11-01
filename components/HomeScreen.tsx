@@ -1,6 +1,6 @@
 import { Link } from 'expo-router';
 import Card from './elements/Card';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import Note from './icons/Note';
 import NoteList from './icons/NoteList';
 
@@ -14,11 +14,9 @@ const Help = () => {
       <Text className='text-sm text-center text-normal text-neutral-500'>
         ¿Necesitas ayuda sobre cómo funciona la app?
       </Text>
-      <TouchableOpacity className=''>
-        <Link href='/ayuda' className='text-sm text-center text-indigo-300'>
-          Infórmate en la sección de ayuda
-        </Link>
-      </TouchableOpacity>
+      <Link href='/ayuda' className='text-sm text-center text-indigo-200'>
+        Infórmate en la sección de ayuda
+      </Link>
     </View>
   );
 };
