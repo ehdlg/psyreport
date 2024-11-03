@@ -74,7 +74,7 @@ const Control = ({
   stepLimits: { MIN: number; MAX: number };
 }) => {
   return (
-    <View className='flex-row justify-around'>
+    <View className='flex-row justify-around p-4 rounded-b-xl bg-neutral-50'>
       {step > stepLimits.MIN && (
         <Button type='secondary' title='Anterior' onPress={formControl.back} />
       )}
@@ -133,7 +133,7 @@ export default function NewReport() {
 
   return (
     <>
-      <View className='gap-y-6 p-6 w-full rounded-xl border drop-shadow-xl border-neutral-200'>
+      <View className='gap-y-6 pt-6 w-full rounded-xl border drop-shadow-xl border-neutral-200'>
         {/* TODO: add progress bar */}
         {formOrder[step]}
         <NewReport.Control formControl={formControl} step={step} stepLimits={stepLimits} />
