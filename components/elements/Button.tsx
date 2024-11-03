@@ -12,15 +12,15 @@ export default function Button({
   title: string;
 }) {
   const wrapperStyles: Record<ButtonType, string> = {
-    primary: 'rounded px-4 py-2 border border-none text-white bg-indigo-400',
-    secondary: 'justify-center px-4 py-2  rounded border border-neutral-300',
-    tertiary: 'px-6 py-4',
+    primary: 'rounded px-4 py-2 border border border-white text-white bg-indigo-400 min-w-20',
+    secondary: 'justify-center px-4 py-2  rounded border border-neutral-300 min-w-20',
+    tertiary: 'px-6 py-4 min-w-20',
   };
 
   const textStyles: Record<ButtonType, string> = {
-    primary: 'text-white text-neutral-700',
-    secondary: 'font-bold text-indigo-300',
-    tertiary: 'font-bold text-neutral-500',
+    primary: 'text-white text-neutral-700 text-center',
+    secondary: 'font-bold text-indigo-300 text-center',
+    tertiary: 'font-bold text-neutral-500 text-center',
   };
 
   return (
