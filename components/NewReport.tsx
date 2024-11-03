@@ -4,7 +4,7 @@ import { FormikErrors, useFormik } from 'formik';
 import { Text, View } from 'react-native';
 import Button from './elements/Button';
 import { CURRENT_DATETIME } from '../constants';
-import { SelfReport } from '../types';
+import { NewSelfReport } from '../types';
 import { formatDateWithTime } from '../utils';
 
 const DateTime = ({
@@ -16,7 +16,7 @@ const DateTime = ({
     field: string,
     value: any,
     shouldValidate?: boolean
-  ) => Promise<void> | Promise<FormikErrors<SelfReport>>;
+  ) => Promise<void> | Promise<FormikErrors<NewSelfReport>>;
 }) => {
   const [showDate, setShowDate] = useState<boolean>(false);
   const [mode, setMode] = useState<'date' | 'time'>('date');
@@ -91,7 +91,7 @@ NewReport.DateTime = DateTime;
 NewReport.Control = Control;
 
 export default function NewReport() {
-  const formik = useFormik<SelfReport>({
+  const formik = useFormik<NewSelfReport>({
     initialValues: {
       date: CURRENT_DATETIME,
       antecedent: '',
