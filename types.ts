@@ -13,3 +13,5 @@ export type SelfReport = {
     text: string | null;
   };
 };
+
+export type ButtonType = 'primary' | 'secondary' | 'tertiary';
