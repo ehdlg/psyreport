@@ -156,11 +156,11 @@ const Antecedent = ({
 };
 
 const Event = ({
-  reportEvent,
+  event,
   handleEventText,
   updateFeeling,
 }: {
-  reportEvent: { feeling: number; text: string };
+  event: NewSelfReport['event'];
   handleEventText: (e: ChangeEvent | any) => void;
   updateReportField: (field: string, value: string | number) => void;
   updateFeeling: (newValue: number) => () => void;
@@ -169,12 +169,12 @@ const Event = ({
     <QuestionWrapper>
       <ReportTextInput
         handleReportValue={handleEventText}
-        reportValue={reportEvent.text}
+        reportValue={event.text}
         title='Evento'
         placeholder='Detalla lo que ocurrió'
       />
       <View className='gap-y-2 mt-8'>
-        <ReportFeelingInput feelingValue={reportEvent.feeling} updateFeeling={updateFeeling} />
+        <ReportFeelingInput feelingValue={event.feeling} updateFeeling={updateFeeling} />
       </View>
     </QuestionWrapper>
   );
@@ -264,7 +264,7 @@ export default function NewReport() {
     />,
     <NewReport.Event
       handleEventText={formik.handleChange('event.text')}
-      reportEvent={formik.values.event}
+      event={formik.values.event}
       updateReportField={updateReportField}
       updateFeeling={updateFeeling('event.feeling')}
     />,
