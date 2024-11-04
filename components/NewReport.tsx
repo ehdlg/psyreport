@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { FormikErrors, useFormik } from 'formik';
-import { Text, View } from 'react-native';
+import { useFormik } from 'formik';
+import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Button from './elements/Button';
 import { CURRENT_DATETIME } from '../constants';
 import { NewSelfReport } from '../types';
@@ -12,11 +12,7 @@ const DateTime = ({
   setFieldValue,
 }: {
   formikDate: Date;
-  setFieldValue: (
-    field: string,
-    value: any,
-    shouldValidate?: boolean
-  ) => Promise<void> | Promise<FormikErrors<NewSelfReport>>;
+  setFieldValue: (field: string, value: any) => void;
 }) => {
   const [showDate, setShowDate] = useState<boolean>(false);
   const [mode, setMode] = useState<'date' | 'time'>('date');
@@ -87,8 +83,80 @@ const Control = ({
   );
 };
 
+const Antecedent = ({
+  antecedentValue,
+  handleAntecedent,
+}: {
+  antecedentValue: string;
+  handleAntecedent: (e: ChangeEvent | any) => void;
+}) => {
+  return (
+    <>
+      <Text className='text-xl text-center text-neutral-600'>Situación precendente</Text>
+      <View className='p-4'>
+        <TextInput
+          defaultValue={antecedentValue}
+          className='overflow-y-auto p-2 h-auto rounded border border-neutral-200'
+          placeholder='Dónde estabas, con quién...'
+          onChangeText={handleAntecedent}
+          multiline
+        />
+      </View>
+    </>
+  );
+};
+
+const Event = ({
+  reportEvent,
+  handleEventText,
+  updateReportField,
+}: {
+  reportEvent: { feeling: number; text: string };
+  handleEventText: (e: ChangeEvent | any) => void;
+  updateReportField: (field: string, value: string | number) => void;
+}) => {
+  //TODO add feeling limits(1-10) without magic numbers, this functioun could be reused later
+  const updateFeeling = (newValue: string | number) => {
+    const newFeelingValue = Number(newValue);
+
+    if (isNaN(newFeelingValue) || newFeelingValue > 10 || newFeelingValue < 1) return;
+
+    updateReportField('event.feeling', newFeelingValue);
+  };
+  return (
+    <>
+      <Text className='text-xl text-center text-neutral-600'>Evento</Text>
+
+      <View className='p-4'>
+        <TextInput
+          defaultValue={reportEvent.text}
+          multiline
+          placeholder='Detalla lo que ocurrió...'
+          onChangeText={handleEventText}
+          className='overflow-y-auto p-2 h-auto rounded border border-neutral-200'
+        />
+        <View className='gap-y-2 mt-8'>
+          <Text className='text-center text-neutral-500'>¿Cómo te sentiste en ese momento?</Text>
+          {/* TODO: use + and - svg instead */}
+          <View className='flex-row gap-x-6 justify-center'>
+            <TouchableOpacity onPress={() => updateFeeling(--reportEvent.feeling)}>
+              <Text className='text-xl text-neutral-700'>-</Text>
+            </TouchableOpacity>
+            <Text className='text-2xl text-neutral-700'>{reportEvent.feeling}</Text>
+            <TouchableOpacity onPress={() => updateFeeling(++reportEvent.feeling)}>
+              <Text className='text-xl text-neutral-700'>+</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </>
+  );
+};
+
 NewReport.DateTime = DateTime;
 NewReport.Control = Control;
+NewReport.Antedecent = Antecedent;
+NewReport.Event = Event;
 
 export default function NewReport() {
   const formik = useFormik<NewSelfReport>({
@@ -119,10 +187,22 @@ export default function NewReport() {
     MIN: 0,
     MAX: 3,
   };
+  const updateReportField = (field: string, value: string | number) => {
+    formik.setFieldValue(field, value);
+  };
 
   const [step, setStep] = useState<number>(0);
   const formOrder = [
-    <NewReport.DateTime formikDate={formik.values.date} setFieldValue={formik.setFieldValue} />,
+    <NewReport.DateTime formikDate={formik.values.date} setFieldValue={updateReportField} />,
+    <NewReport.Antedecent
+      antecedentValue={formik.values.antecedent}
+      handleAntecedent={formik.handleChange('antecedent')}
+    />,
+    <NewReport.Event
+      handleEventText={formik.handleChange('event.text')}
+      reportEvent={formik.values.event}
+      updateReportField={updateReportField}
+    />,
   ];
 
   const updateStep = (newStep: number) => {
