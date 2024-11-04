@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, PropsWithChildren, useState } from 'react';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { useFormik } from 'formik';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
@@ -6,6 +6,35 @@ import Button from './elements/Button';
 import { CURRENT_DATETIME } from '../constants';
 import { NewSelfReport } from '../types';
 import { formatDateWithTime } from '../utils';
+
+const ReportTextInput = ({
+  reportValue,
+  handleReportValue,
+  title,
+  placeholder = '',
+}: {
+  title: string;
+  reportValue: string;
+  handleReportValue: (e: ChangeEvent | any) => void;
+  placeholder?: string;
+}) => {
+  return (
+    <>
+      <Text className='text-xl text-center text-neutral-600'>{title}</Text>
+      <TextInput
+        defaultValue={reportValue}
+        className='overflow-y-auto p-2 h-auto rounded border border-neutral-200 text-neutral-800'
+        placeholder={placeholder}
+        onChangeText={handleReportValue}
+        multiline
+      />
+    </>
+  );
+};
+
+const QuestionWrapper = ({ children }: PropsWithChildren) => {
+  return <View className='gap-y-4 p-4'>{children}</View>;
+};
 
 const DateTime = ({
   formikDate,
@@ -91,18 +120,14 @@ const Antecedent = ({
   handleAntecedent: (e: ChangeEvent | any) => void;
 }) => {
   return (
-    <>
-      <Text className='text-xl text-center text-neutral-600'>Situación precendente</Text>
-      <View className='p-4'>
-        <TextInput
-          defaultValue={antecedentValue}
-          className='overflow-y-auto p-2 h-auto rounded border border-neutral-200'
-          placeholder='Dónde estabas, con quién...'
-          onChangeText={handleAntecedent}
-          multiline
-        />
-      </View>
-    </>
+    <QuestionWrapper>
+      <ReportTextInput
+        handleReportValue={handleAntecedent}
+        placeholder='Dónde estabas, con quién...'
+        reportValue={antecedentValue}
+        title='Antecedente'
+      />
+    </QuestionWrapper>
   );
 };
 
@@ -124,32 +149,46 @@ const Event = ({
     updateReportField('event.feeling', newFeelingValue);
   };
   return (
-    <>
-      <Text className='text-xl text-center text-neutral-600'>Evento</Text>
-
-      <View className='p-4'>
-        <TextInput
-          defaultValue={reportEvent.text}
-          multiline
-          placeholder='Detalla lo que ocurrió...'
-          onChangeText={handleEventText}
-          className='overflow-y-auto p-2 h-auto rounded border border-neutral-200'
-        />
-        <View className='gap-y-2 mt-8'>
-          <Text className='text-center text-neutral-500'>¿Cómo te sentiste en ese momento?</Text>
-          {/* TODO: use + and - svg instead */}
-          <View className='flex-row gap-x-6 justify-center'>
-            <TouchableOpacity onPress={() => updateFeeling(--reportEvent.feeling)}>
-              <Text className='text-xl text-neutral-700'>-</Text>
-            </TouchableOpacity>
-            <Text className='text-2xl text-neutral-700'>{reportEvent.feeling}</Text>
-            <TouchableOpacity onPress={() => updateFeeling(++reportEvent.feeling)}>
-              <Text className='text-xl text-neutral-700'>+</Text>
-            </TouchableOpacity>
-          </View>
+    <QuestionWrapper>
+      <ReportTextInput
+        handleReportValue={handleEventText}
+        reportValue={reportEvent.text}
+        title='Evento'
+        placeholder='Detalla lo que ocurrió'
+      />
+      <View className='gap-y-2 mt-8'>
+        <Text className='text-center text-neutral-500'>¿Cómo te sentiste en ese momento?</Text>
+        {/* TODO: use + and - svg instead */}
+        <View className='flex-row gap-x-6 justify-center'>
+          <TouchableOpacity onPress={() => updateFeeling(--reportEvent.feeling)}>
+            <Text className='text-xl text-neutral-700'>-</Text>
+          </TouchableOpacity>
+          <Text className='text-2xl text-neutral-700'>{reportEvent.feeling}</Text>
+          <TouchableOpacity onPress={() => updateFeeling(++reportEvent.feeling)}>
+            <Text className='text-xl text-neutral-700'>+</Text>
+          </TouchableOpacity>
         </View>
       </View>
-    </>
+    </QuestionWrapper>
+  );
+};
+
+const Thought = ({
+  thoughtValue,
+  handleThought,
+}: {
+  thoughtValue: string;
+  handleThought: (e: ChangeEvent | any) => void;
+}) => {
+  return (
+    <QuestionWrapper>
+      <ReportTextInput
+        title='Pensamiento'
+        handleReportValue={handleThought}
+        reportValue={thoughtValue}
+        placeholder='Qué pensaste de la situación pasado un tiempo'
+      />
+    </QuestionWrapper>
   );
 };
 
@@ -157,6 +196,7 @@ NewReport.DateTime = DateTime;
 NewReport.Control = Control;
 NewReport.Antedecent = Antecedent;
 NewReport.Event = Event;
+NewReport.Thought = Thought;
 
 export default function NewReport() {
   const formik = useFormik<NewSelfReport>({
@@ -202,6 +242,10 @@ export default function NewReport() {
       handleEventText={formik.handleChange('event.text')}
       reportEvent={formik.values.event}
       updateReportField={updateReportField}
+    />,
+    <NewReport.Thought
+      handleThought={formik.handleChange('thought')}
+      thoughtValue={formik.values.thoughts}
     />,
   ];
 
