@@ -14,7 +14,7 @@ const ReportTextInput = ({
   placeholder = '',
 }: {
   title: string;
-  reportValue: string;
+  reportValue: string | null;
   handleReportValue: (e: ChangeEvent | any) => void;
   placeholder?: string;
 }) => {
@@ -22,7 +22,7 @@ const ReportTextInput = ({
     <>
       <Text className='text-xl text-center text-neutral-600'>{title}</Text>
       <TextInput
-        defaultValue={reportValue}
+        defaultValue={reportValue || ''}
         className='overflow-y-auto p-2 h-auto rounded border border-neutral-200 text-neutral-800'
         placeholder={placeholder}
         onChangeText={handleReportValue}
