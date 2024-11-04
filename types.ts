@@ -1,16 +1,14 @@
-export type Feeling = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-
 export type SelfReport = {
   id: number;
   date: Date;
   antecedent: string;
   event: {
-    feeling: Feeling;
+    feeling: number;
     text: string;
   };
   thoughts: string;
   reflections: {
-    feeling: Feeling | null;
+    feeling: number | null;
     text: string | null;
   };
 };
