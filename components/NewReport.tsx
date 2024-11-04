@@ -3,7 +3,7 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { useFormik } from 'formik';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Button from './elements/Button';
-import { CURRENT_DATETIME } from '../constants';
+import { CURRENT_DATETIME, FEELING_LIMITS } from '../constants';
 import { NewSelfReport } from '../types';
 import { formatDateWithTime } from '../utils';
 
@@ -29,6 +29,30 @@ const ReportTextInput = ({
         multiline
       />
     </>
+  );
+};
+
+const ReportFeelingInput = ({
+  updateFeeling,
+  feelingValue,
+}: {
+  updateFeeling: (newValue: number) => () => void;
+  feelingValue: number;
+}) => {
+  return (
+    <View className='gap-y-2 mt-8'>
+      <Text className='text-center text-neutral-500'>¿Cómo te sentiste en ese momento?</Text>
+      {/* TODO: use + and - svg instead */}
+      <View className='flex-row gap-x-6 justify-center'>
+        <TouchableOpacity onPress={updateFeeling(feelingValue - 1)}>
+          <Text className='text-xl text-neutral-700'>-</Text>
+        </TouchableOpacity>
+        <Text className='text-2xl text-neutral-700'>{feelingValue}</Text>
+        <TouchableOpacity onPress={updateFeeling(feelingValue + 1)}>
+          <Text className='text-xl text-neutral-700'>+</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
@@ -134,20 +158,13 @@ const Antecedent = ({
 const Event = ({
   reportEvent,
   handleEventText,
-  updateReportField,
+  updateFeeling,
 }: {
   reportEvent: { feeling: number; text: string };
   handleEventText: (e: ChangeEvent | any) => void;
   updateReportField: (field: string, value: string | number) => void;
+  updateFeeling: (newValue: number) => () => void;
 }) => {
-  //TODO add feeling limits(1-10) without magic numbers, this functioun could be reused later
-  const updateFeeling = (newValue: string | number) => {
-    const newFeelingValue = Number(newValue);
-
-    if (isNaN(newFeelingValue) || newFeelingValue > 10 || newFeelingValue < 1) return;
-
-    updateReportField('event.feeling', newFeelingValue);
-  };
   return (
     <QuestionWrapper>
       <ReportTextInput
@@ -157,17 +174,7 @@ const Event = ({
         placeholder='Detalla lo que ocurrió'
       />
       <View className='gap-y-2 mt-8'>
-        <Text className='text-center text-neutral-500'>¿Cómo te sentiste en ese momento?</Text>
-        {/* TODO: use + and - svg instead */}
-        <View className='flex-row gap-x-6 justify-center'>
-          <TouchableOpacity onPress={() => updateFeeling(--reportEvent.feeling)}>
-            <Text className='text-xl text-neutral-700'>-</Text>
-          </TouchableOpacity>
-          <Text className='text-2xl text-neutral-700'>{reportEvent.feeling}</Text>
-          <TouchableOpacity onPress={() => updateFeeling(++reportEvent.feeling)}>
-            <Text className='text-xl text-neutral-700'>+</Text>
-          </TouchableOpacity>
-        </View>
+        <ReportFeelingInput feelingValue={reportEvent.feeling} updateFeeling={updateFeeling} />
       </View>
     </QuestionWrapper>
   );
@@ -259,6 +266,7 @@ export default function NewReport() {
       handleEventText={formik.handleChange('event.text')}
       reportEvent={formik.values.event}
       updateReportField={updateReportField}
+      updateFeeling={updateFeeling('event.feeling')}
     />,
     <NewReport.Thought
       handleThought={formik.handleChange('thought')}
