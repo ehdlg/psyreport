@@ -3,7 +3,7 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { useFormik } from 'formik';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Button from './elements/Button';
-import { CURRENT_DATETIME, FEELING_LIMITS } from '../constants';
+import { CURRENT_DATETIME, DEFAULT_FEELING_VALUE, FEELING_LIMITS } from '../constants';
 import { NewSelfReport } from '../types';
 import { formatDateWithTime } from '../utils';
 
@@ -199,11 +199,38 @@ const Thought = ({
   );
 };
 
+const Reflection = ({
+  handleReflectionText,
+  reflection,
+  updateFeeling,
+}: {
+  handleReflectionText: (e: ChangeEvent | any) => void;
+  reflection: NewSelfReport['reflections'];
+  updateFeeling: (newValue: number) => () => void;
+}) => {
+  return (
+    <QuestionWrapper>
+      <ReportTextInput
+        title='Reflexiones'
+        handleReportValue={handleReflectionText}
+        reportValue={reflection.text}
+        placeholder='Qué pensaste, cómo viste la situación al cabo de un tiempo'
+      />
+
+      <ReportFeelingInput
+        feelingValue={reflection.feeling || DEFAULT_FEELING_VALUE}
+        updateFeeling={updateFeeling}
+      />
+    </QuestionWrapper>
+  );
+};
+
 NewReport.DateTime = DateTime;
 NewReport.Control = Control;
 NewReport.Antedecent = Antecedent;
 NewReport.Event = Event;
 NewReport.Thought = Thought;
+NewReport.Reflection = Reflection;
 
 export default function NewReport() {
   const formik = useFormik<NewSelfReport>({
@@ -232,7 +259,7 @@ export default function NewReport() {
   // TODO: Modify these values so they are not 'magic numbers' using formOrder length
   const stepLimits = {
     MIN: 0,
-    MAX: 3,
+    MAX: 4,
   };
   const updateReportField = (field: string, value: string | number) => {
     formik.setFieldValue(field, value);
@@ -272,6 +299,11 @@ export default function NewReport() {
       handleThought={formik.handleChange('thought')}
       thoughtValue={formik.values.thoughts}
     />,
+    <NewReport.Reflection
+      handleReflectionText={formik.handleChange('reflection.text')}
+      reflection={formik.values.reflections}
+      updateFeeling={updateFeeling('reflections.feeling')}
+    />,
   ];
 
   const updateStep = (newStep: number) => {
@@ -281,12 +313,10 @@ export default function NewReport() {
   };
 
   return (
-    <>
-      <View className='gap-y-6 pt-6 w-full rounded-xl border drop-shadow-xl border-neutral-200'>
-        {/* TODO: add progress bar */}
-        {formOrder[step]}
-        <NewReport.Control formControl={formControl} step={step} stepLimits={stepLimits} />
-      </View>
-    </>
+    <View className='gap-y-6 pt-6 w-full rounded-xl border drop-shadow-xl border-neutral-200'>
+      {/* TODO: add progress bar */}
+      {formOrder[step]}
+      <NewReport.Control formControl={formControl} step={step} stepLimits={stepLimits} />
+    </View>
   );
 }
