@@ -296,11 +296,11 @@ export default function NewReport() {
       updateFeeling={updateFeeling('event.feeling')}
     />,
     <NewReport.Thought
-      handleThought={formik.handleChange('thought')}
+      handleThought={formik.handleChange('thoughts')}
       thoughtValue={formik.values.thoughts}
     />,
     <NewReport.Reflection
-      handleReflectionText={formik.handleChange('reflection.text')}
+      handleReflectionText={formik.handleChange('reflections.text')}
       reflection={formik.values.reflections}
       updateFeeling={updateFeeling('reflections.feeling')}
     />,
