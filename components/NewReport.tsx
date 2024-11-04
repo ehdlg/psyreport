@@ -3,7 +3,12 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { useFormik } from 'formik';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Button from './elements/Button';
-import { CURRENT_DATETIME, DEFAULT_FEELING_VALUE, FEELING_LIMITS } from '../constants';
+import {
+  CURRENT_DATETIME,
+  DEFAULT_FEELING_VALUE,
+  DEFAULT_REPORT_VALUES,
+  FEELING_LIMITS,
+} from '../constants';
 import { NewSelfReport } from '../types';
 import { formatDateWithTime } from '../utils';
 
@@ -234,19 +239,7 @@ NewReport.Reflection = Reflection;
 
 export default function NewReport() {
   const formik = useFormik<NewSelfReport>({
-    initialValues: {
-      date: CURRENT_DATETIME,
-      antecedent: '',
-      event: {
-        feeling: 5,
-        text: '',
-      },
-      reflections: {
-        feeling: 5,
-        text: '',
-      },
-      thoughts: '',
-    },
+    initialValues: DEFAULT_REPORT_VALUES,
     onSubmit: (values) => {
       alert(JSON.stringify(values));
     },
@@ -296,11 +289,11 @@ export default function NewReport() {
       updateFeeling={updateFeeling('event.feeling')}
     />,
     <NewReport.Thought
-      handleThought={formik.handleChange('thoughts')}
+      handleThought={formik.handleChange('thought')}
       thoughtValue={formik.values.thoughts}
     />,
     <NewReport.Reflection
-      handleReflectionText={formik.handleChange('reflections.text')}
+      handleReflectionText={formik.handleChange('reflection.text')}
       reflection={formik.values.reflections}
       updateFeeling={updateFeeling('reflections.feeling')}
     />,
