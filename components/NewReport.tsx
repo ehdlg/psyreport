@@ -231,6 +231,23 @@ export default function NewReport() {
     formik.setFieldValue(field, value);
   };
 
+  const updateFeeling = (field: 'event.feeling' | 'reflections.feeling') => {
+    return function (newValue: number) {
+      return function () {
+        const newFeelingValue = Number(newValue);
+
+        if (
+          isNaN(newFeelingValue) ||
+          newFeelingValue > FEELING_LIMITS.MAX ||
+          newFeelingValue < FEELING_LIMITS.MIN
+        )
+          return;
+
+        updateReportField(field, newFeelingValue);
+      };
+    };
+  };
+
   const [step, setStep] = useState<number>(0);
   const formOrder = [
     <NewReport.DateTime formikDate={formik.values.date} setFieldValue={updateReportField} />,
