@@ -1,6 +1,7 @@
 import { ChangeEvent, PropsWithChildren, useState } from 'react';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { useFormik } from 'formik';
+import { saveReport } from '../storage/index';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Button from './elements/Button';
 import {
@@ -122,10 +123,12 @@ const Control = ({
   step,
   formControl,
   stepLimits,
+  onSubmit,
 }: {
   step: number;
   formControl: { next: () => void; back: () => void };
   stepLimits: { MIN: number; MAX: number };
+  onSubmit: (e?: React.FormEvent<HTMLFormElement>) => void;
 }) => {
   return (
     <View className='flex-row justify-around p-4 rounded-b-xl bg-neutral-50'>
@@ -133,7 +136,7 @@ const Control = ({
         <Button type='secondary' title='Anterior' onPress={formControl.back} />
       )}
       {step === stepLimits.MAX ? (
-        <Button type='primary' title='Fin' onPress={() => alert('fin')} />
+        <Button type='primary' title='Enviar' onPress={onSubmit} />
       ) : (
         <Button type='secondary' title='Siguiente' onPress={formControl.next} />
       )}
@@ -240,9 +243,7 @@ NewReport.Reflection = Reflection;
 export default function NewReport() {
   const formik = useFormik<NewSelfReport>({
     initialValues: DEFAULT_REPORT_VALUES,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values));
-    },
+    onSubmit: saveReport,
   });
   const formControl = {
     next: () => updateStep(step + 1),
@@ -309,7 +310,12 @@ export default function NewReport() {
     <View className='gap-y-6 pt-6 w-full rounded-xl border drop-shadow-xl border-neutral-200'>
       {/* TODO: add progress bar */}
       {formOrder[step]}
-      <NewReport.Control formControl={formControl} step={step} stepLimits={stepLimits} />
+      <NewReport.Control
+        formControl={formControl}
+        step={step}
+        stepLimits={stepLimits}
+        onSubmit={formik.handleSubmit}
+      />
     </View>
   );
 }
