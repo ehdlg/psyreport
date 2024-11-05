@@ -8,7 +8,7 @@ const setReports = async (reports: SelfReport[]) => {
   try {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(reports));
   } catch (error) {
-    console.error('Hubo un error al guardar los autorregistros');
+    console.error(error);
   }
 };
 export const getReports = async () => {
@@ -40,9 +40,10 @@ export const saveReport = async (newReport: NewSelfReport) => {
     const report: SelfReport = { ...newReport, id: reportId };
     const newReports = [...reports, report];
 
-    setReports(newReports);
+    await setReports(newReports);
   } catch (e) {
     console.error(e);
+    throw new Error('Hubo un error al guardar el autorregistro');
   }
 };
 
