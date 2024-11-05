@@ -12,8 +12,9 @@ import {
   DEFAULT_REPORT_VALUES,
   FEELING_LIMITS,
 } from '../constants';
-import { NewSelfReport } from '../types';
+import { NewSelfReport, StepIndicatorStatus } from '../types';
 import { formatDateWithTime } from '../utils';
+import StepIndicator from './elements/StepIndicator';
 
 const ReportTextInput = ({
   reportValue,
@@ -81,7 +82,7 @@ const DateTime = ({
     setShowDate(true);
     setMode(mode);
   };
-  const onDateChange = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
+  const onDateChange = (_event: DateTimePickerEvent, selectedDate: Date | undefined) => {
     if (null == selectedDate) return;
 
     const currentDate = formikDate;
@@ -118,6 +119,26 @@ const DateTime = ({
         </Text>
       </View>
     </>
+  );
+};
+
+const ProgressBar = ({
+  currentStep,
+  numberOfSteps: stepNumber,
+}: {
+  currentStep: number;
+  numberOfSteps: number;
+}) => {
+  const steps = Array.from({ length: stepNumber }, (_, index) => index);
+  return (
+    <View className='flex-row gap-x-4 mx-auto w-10/12'>
+      {steps.map((step) => {
+        const status: StepIndicatorStatus =
+          step === currentStep ? 'current' : step > currentStep ? 'todo' : 'done';
+
+        return <StepIndicator status={status} />;
+      })}
+    </View>
   );
 };
 
@@ -235,6 +256,7 @@ const Reflection = ({
   );
 };
 
+NewReport.ProgressBar = ProgressBar;
 NewReport.DateTime = DateTime;
 NewReport.Control = Control;
 NewReport.Antedecent = Antecedent;
@@ -327,8 +349,8 @@ export default function NewReport() {
   };
 
   return (
-    <View className='gap-y-6 pt-6 w-full rounded-xl border drop-shadow-xl border-neutral-200'>
-      {/* TODO: add progress bar */}
+    <View className='gap-y-4 pt-6 w-full rounded-xl border drop-shadow-xl justify-betweeen border-neutral-200'>
+      <NewReport.ProgressBar currentStep={step} numberOfSteps={formOrder.length} />
       {formOrder[step]}
       <NewReport.Control
         formControl={formControl}
