@@ -19,3 +19,7 @@ export const DEFAULT_REPORT_VALUES = {
   },
   thoughts: '',
 };
+
+export const STORAGE_KEY = 'reports';
+
+export const INITIAL_ID = 1;
