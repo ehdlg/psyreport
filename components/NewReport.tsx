@@ -1,6 +1,8 @@
 import { ChangeEvent, PropsWithChildren, useState } from 'react';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { useFormik } from 'formik';
+import Toast from 'react-native-root-toast';
+import { router } from 'expo-router';
 import { saveReport } from '../storage/index';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
 import Button from './elements/Button';
@@ -241,15 +243,33 @@ NewReport.Thought = Thought;
 NewReport.Reflection = Reflection;
 
 export default function NewReport() {
+  const onSubmit = async (values: NewSelfReport) => {
+    try {
+      await saveReport(values);
+
+      Toast.show('¡Autorregistro completado!', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+      });
+    } catch (_error) {
+      Toast.show('Hubo un error al intentar guardar el autorregistro ', {
+        duration: Toast.durations.LONG,
+      });
+    } finally {
+      setTimeout(router.navigate, 50, '/');
+    }
+  };
+
   const formik = useFormik<NewSelfReport>({
     initialValues: DEFAULT_REPORT_VALUES,
-    onSubmit: saveReport,
+    onSubmit,
   });
   const formControl = {
     next: () => updateStep(step + 1),
     back: () => updateStep(step - 1),
     end: () => alert(formik.values),
   };
+
   // TODO: Modify these values so they are not 'magic numbers' using formOrder length
   const stepLimits = {
     MIN: 0,
