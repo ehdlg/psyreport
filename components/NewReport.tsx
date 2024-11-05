@@ -152,7 +152,7 @@ const Antecedent = ({
     <QuestionWrapper>
       <ReportTextInput
         handleReportValue={handleAntecedent}
-        placeholder='Dónde estabas, con quién...'
+        placeholder='Dónde estabas, qué hacías, con quién...'
         reportValue={antecedentValue}
         title='Antecedente'
       />
