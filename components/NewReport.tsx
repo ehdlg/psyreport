@@ -178,7 +178,7 @@ const Event = ({
         title='Evento'
         placeholder='Detalla lo que ocurrió'
       />
-      <View className='gap-y-2 mt-8'>
+      <View className='gap-y-2'>
         <ReportFeelingInput feelingValue={event.feeling} updateFeeling={updateFeeling} />
       </View>
     </QuestionWrapper>
