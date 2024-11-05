@@ -6,7 +6,7 @@ export const FEELING_LIMITS = {
   MIN: 1,
   MAX: 10,
 };
-export const DEFAULT_FEELING_VALUE = FEELING_LIMITS.MAX / 2;
+export const DEFAULT_FEELING_VALUE = Math.floor(FEELING_LIMITS.MAX / 2);
 
 export const DEFAULT_REPORT_VALUES: NewSelfReport = {
   date: CURRENT_DATETIME,
