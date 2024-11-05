@@ -1,3 +1,5 @@
+import { NewSelfReport } from './types';
+
 export const CURRENT_DATETIME = new Date(Date.now());
 
 export const FEELING_LIMITS = {
@@ -6,7 +8,7 @@ export const FEELING_LIMITS = {
 };
 export const DEFAULT_FEELING_VALUE = FEELING_LIMITS.MAX / 2;
 
-export const DEFAULT_REPORT_VALUES = {
+export const DEFAULT_REPORT_VALUES: NewSelfReport = {
   date: CURRENT_DATETIME,
   antecedent: '',
   event: {
