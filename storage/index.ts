@@ -2,7 +2,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { INITIAL_ID, STORAGE_KEY } from '../constants';
 import { NewSelfReport, SelfReport } from '../types';
 
-// TODO better error handling
+// TODO: better error handling
+
+const setReports = async (reports: SelfReport[]) => {
+  try {
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(reports));
+  } catch (error) {
+    console.error('Hubo un error al guardar los autorregistros');
+  }
+};
 export const getReports = async () => {
   try {
     const reports = await AsyncStorage.getItem(STORAGE_KEY);
@@ -22,7 +30,7 @@ export const generateId = (reports: SelfReport[] | undefined) => {
   return reports[reports.length - 1].id + 1;
 };
 
-export const setReport = async (newReport: NewSelfReport) => {
+export const saveReport = async (newReport: NewSelfReport) => {
   try {
     const reports = await getReports();
 
@@ -32,8 +40,16 @@ export const setReport = async (newReport: NewSelfReport) => {
     const report: SelfReport = { ...newReport, id: reportId };
     const newReports = [...reports, report];
 
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newReports));
+    setReports(newReports);
   } catch (e) {
     console.error(e);
   }
+};
+
+export const deleteReport = async (id: number) => {
+  const storedReports = await getReports();
+
+  const newReports = storedReports.filter((report) => report.id !== id);
+
+  setReports(newReports);
 };
