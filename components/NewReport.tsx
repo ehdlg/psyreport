@@ -149,14 +149,14 @@ const Control = ({
   onSubmit,
 }: {
   step: number;
-  formControl: { next: () => void; back: () => void };
+  formControl: { next: () => Promise<void>; prev: () => void };
   stepLimits: { MIN: number; MAX: number };
   onSubmit: (e?: React.FormEvent<HTMLFormElement>) => void;
 }) => {
   return (
     <View className='flex-row justify-around p-4 rounded-b-xl bg-neutral-50'>
       {step > stepLimits.MIN && (
-        <Button type='secondary' title='Anterior' onPress={formControl.back} />
+        <Button type='secondary' title='Anterior' onPress={formControl.prev} />
       )}
       {step === stepLimits.MAX ? (
         <Button type='primary' title='Enviar' onPress={onSubmit} />
@@ -265,6 +265,7 @@ NewReport.Thought = Thought;
 NewReport.Reflection = Reflection;
 
 export default function NewReport() {
+  const [step, setStep] = useState<number>(0);
   const onSubmit = async (values: NewSelfReport) => {
     try {
       await saveReport(values);
@@ -282,13 +283,49 @@ export default function NewReport() {
     }
   };
 
+  const validate = (values: NewSelfReport) => {
+    const errors: any = {};
+
+    switch (step) {
+      case 0:
+        if (!values.date) {
+          errors.date = 'La fecha no puede estar vacía';
+        }
+        break;
+      case 1:
+        if (!values.antecedent) {
+          errors.antecedent = 'La situación no puede estar vacía';
+        }
+        break;
+      case 2:
+        if (!values.event.text) {
+          errors.event = 'Antes de continuar, describe el evento';
+        }
+        break;
+      case 3:
+        if (!values.thoughts) {
+          errors.thoughts = 'Antes de continuar, describe los pensamientos del evento';
+        }
+        break;
+    }
+
+    return errors;
+  };
+
   const formik = useFormik<NewSelfReport>({
     initialValues: DEFAULT_REPORT_VALUES,
     onSubmit,
+    validate,
   });
   const formControl = {
-    next: () => updateStep(step + 1),
-    back: () => updateStep(step - 1),
+    next: async () => {
+      const errors = await formik.validateForm();
+
+      if (Object.keys(errors).length !== 0) return;
+
+      updateStep(step + 1);
+    },
+    prev: () => updateStep(step - 1),
     end: () => alert(formik.values),
   };
 
@@ -318,7 +355,6 @@ export default function NewReport() {
     };
   };
 
-  const [step, setStep] = useState<number>(0);
   const formOrder = [
     <NewReport.DateTime formikDate={formik.values.date} setFieldValue={updateReportField} />,
     <NewReport.Antedecent
@@ -348,10 +384,14 @@ export default function NewReport() {
     setStep(newStep);
   };
 
+  const invalidForm = Object.keys(formik.errors).length !== 0;
+
   return (
     <View className='gap-y-4 pt-6 w-full rounded-xl border drop-shadow-xl justify-betweeen border-neutral-200'>
       <NewReport.ProgressBar currentStep={step} numberOfSteps={formOrder.length} />
       {formOrder[step]}
+      {/* Create and implement errors component to display errors */}
+      {invalidForm && <Text>Hay errorres</Text>}
       <NewReport.Control
         formControl={formControl}
         step={step}
