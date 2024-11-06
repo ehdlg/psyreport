@@ -136,7 +136,7 @@ const ProgressBar = ({
         const status: StepIndicatorStatus =
           step === currentStep ? 'current' : step > currentStep ? 'todo' : 'done';
 
-        return <StepIndicator status={status} />;
+        return <StepIndicator key={step} status={status} />;
       })}
     </View>
   );
