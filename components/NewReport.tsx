@@ -334,7 +334,21 @@ export default function NewReport() {
     },
     end: () => formik.handleSubmit(),
   };
+  const invalidForm = Object.keys(formik.errors).length !== 0;
+  const showErrors = () => {
+    Object.values(formik.errors).map((error) => {
+      const errorMessage = typeof error === 'string' ? error : String(error);
 
+      Toast.show(errorMessage, {
+        duration: Toast.durations.SHORT,
+        backgroundColor: '#fecaca',
+        textColor: '#ef4444',
+        animation: true,
+      });
+
+      formik.setErrors({});
+    });
+  };
   // TODO: Modify these values so they are not 'magic numbers' using formOrder length
   const stepLimits = {
     MIN: 0,
@@ -390,21 +404,7 @@ export default function NewReport() {
     setStep(newStep);
   };
 
-  const invalidForm = Object.keys(formik.errors).length !== 0;
-  const showErrors = (errors: FormikErrors<NewSelfReport>) => {
-    Object.values(errors).map((error) => {
-      const errorMessage = typeof error === 'string' ? error : String(error);
-
-      Toast.show(errorMessage, {
-        duration: Toast.durations.SHORT,
-        backgroundColor: '#fecaca',
-        textColor: '#ef4444',
-        animation: true,
-      });
-    });
-  };
-
-  if (invalidForm) showErrors(formik.errors);
+  if (invalidForm) showErrors();
 
   return (
     <View className='gap-y-4 pt-6 w-full rounded-xl border drop-shadow-xl justify-betweeen border-neutral-200'>
