@@ -1,20 +1,20 @@
 import { ChangeEvent, PropsWithChildren, useState } from 'react';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { FormikErrors, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import Toast from 'react-native-root-toast';
 import { router } from 'expo-router';
-import { saveReport } from '../storage/index';
+import { saveReport } from '../../storage/index';
 import { Text, TextInput, View, TouchableOpacity } from 'react-native';
-import Button from './elements/Button';
+import Button from '../elements/Button';
 import {
   CURRENT_DATETIME,
   DEFAULT_FEELING_VALUE,
   DEFAULT_REPORT_VALUES,
   FEELING_LIMITS,
-} from '../constants';
-import { NewSelfReport, StepIndicatorStatus } from '../types';
-import { formatDateWithTime } from '../utils';
-import StepIndicator from './elements/StepIndicator';
+} from '../../constants';
+import { NewSelfReport, StepIndicatorStatus } from '../../types';
+import { formatDateWithTime } from '../../utils';
+import StepIndicator from '../elements/StepIndicator';
 
 const ReportTextInput = ({
   reportValue,
