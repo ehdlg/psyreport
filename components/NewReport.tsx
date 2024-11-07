@@ -1,6 +1,6 @@
 import { ChangeEvent, PropsWithChildren, useState } from 'react';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { useFormik } from 'formik';
+import { FormikErrors, useFormik } from 'formik';
 import Toast from 'react-native-root-toast';
 import { router } from 'expo-router';
 import { saveReport } from '../storage/index';
@@ -146,12 +146,14 @@ const Control = ({
   step,
   formControl,
   stepLimits,
-  onSubmit,
 }: {
   step: number;
-  formControl: { next: () => Promise<void>; prev: () => void };
+  formControl: {
+    next: () => Promise<void>;
+    prev: () => void;
+    end: (e?: React.FormEvent<HTMLFormElement>) => void;
+  };
   stepLimits: { MIN: number; MAX: number };
-  onSubmit: (e?: React.FormEvent<HTMLFormElement>) => void;
 }) => {
   return (
     <View className='flex-row justify-around p-4 rounded-b-xl bg-neutral-50'>
@@ -159,7 +161,7 @@ const Control = ({
         <Button type='secondary' title='Anterior' onPress={formControl.prev} />
       )}
       {step === stepLimits.MAX ? (
-        <Button type='primary' title='Enviar' onPress={onSubmit} />
+        <Button type='primary' title='Enviar' onPress={formControl.end} />
       ) : (
         <Button type='secondary' title='Siguiente' onPress={formControl.next} />
       )}
@@ -327,10 +329,10 @@ export default function NewReport() {
     },
     prev: () => {
       formik.setErrors({});
-      
+
       updateStep(step - 1);
     },
-    end: () => alert(formik.values),
+    end: () => formik.handleSubmit(),
   };
 
   // TODO: Modify these values so they are not 'magic numbers' using formOrder length
@@ -389,19 +391,26 @@ export default function NewReport() {
   };
 
   const invalidForm = Object.keys(formik.errors).length !== 0;
+  const showErrors = (errors: FormikErrors<NewSelfReport>) => {
+    Object.values(errors).map((error) => {
+      const errorMessage = typeof error === 'string' ? error : String(error);
+
+      Toast.show(errorMessage, {
+        duration: Toast.durations.SHORT,
+        backgroundColor: '#fecaca',
+        textColor: '#ef4444',
+        animation: true,
+      });
+    });
+  };
+
+  if (invalidForm) showErrors(formik.errors);
 
   return (
     <View className='gap-y-4 pt-6 w-full rounded-xl border drop-shadow-xl justify-betweeen border-neutral-200'>
       <NewReport.ProgressBar currentStep={step} numberOfSteps={formOrder.length} />
       {formOrder[step]}
-      {/* Create and implement errors component to display errors */}
-      {invalidForm && <Text>Hay errorres</Text>}
-      <NewReport.Control
-        formControl={formControl}
-        step={step}
-        stepLimits={stepLimits}
-        onSubmit={formik.handleSubmit}
-      />
+      <NewReport.Control formControl={formControl} step={step} stepLimits={stepLimits} />
     </View>
   );
 }
