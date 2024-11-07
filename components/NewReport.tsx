@@ -325,7 +325,11 @@ export default function NewReport() {
 
       updateStep(step + 1);
     },
-    prev: () => updateStep(step - 1),
+    prev: () => {
+      formik.setErrors({});
+      
+      updateStep(step - 1);
+    },
     end: () => alert(formik.values),
   };
 
