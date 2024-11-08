@@ -1,5 +1,5 @@
-import NewReport from '../components/Form';
+import Form from '../components/Form';
 
 export default function Index() {
-  return <NewReport />;
+  return <Form />;
 }
