@@ -162,6 +162,7 @@ export default function Form() {
     initialValues: DEFAULT_REPORT_VALUES,
     onSubmit,
     validate,
+    validateOnChange: false,
   });
   const formControl = {
     next: async () => {
