@@ -32,3 +32,9 @@ export const SELF_REPORT_QUESTIONS: Record<keyof Omit<NewSelfReport, 'id' | 'dat
   reflections: '¿Qué pensaste pasado un tiempo?',
   thoughts: '¿Qué pensanste?',
 };
+
+export const ROUTES = {
+  HOME: '/',
+  NEW: '/new',
+  REPORTS: '/reports',
+};
