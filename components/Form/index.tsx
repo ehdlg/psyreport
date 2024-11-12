@@ -221,7 +221,7 @@ export default function Form() {
   };
 
   const formOrder = [
-    <Form.DateTime formikDate={formik.values.date} setFieldValue={updateReportField} />,
+    <Form.DateTime formikDate={new Date(formik.values.date)} setFieldValue={updateReportField} />,
     <Form.Antedecent
       antecedentValue={formik.values.antecedent}
       handleAntecedent={formik.handleChange('antecedent')}
