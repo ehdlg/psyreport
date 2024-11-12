@@ -41,16 +41,20 @@ export const saveReport = async (newReport: NewSelfReport) => {
     const newReports = [...reports, report];
 
     await setReports(newReports);
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
     throw new Error('Hubo un error al guardar el autorregistro');
   }
 };
 
 export const deleteReport = async (id: number) => {
-  const storedReports = await getReports();
+  try {
+    const storedReports = await getReports();
 
-  const newReports = storedReports.filter((report) => report.id !== id);
+    const newReports = storedReports.filter((report) => report.id !== id);
 
-  setReports(newReports);
+    await setReports(newReports);
+  } catch (_error) {
+    throw new Error('No se pudo borrar el autorregistro');
+  }
 };
