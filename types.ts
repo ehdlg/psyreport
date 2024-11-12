@@ -1,6 +1,6 @@
 export type SelfReport = {
   id: number;
-  date: Date;
+  date: string;
   antecedent: string;
   event: {
     feeling: number;
