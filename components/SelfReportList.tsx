@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import useGetSelfReports from '../hooks/useGetSelfReports';
-import { Text, View } from 'react-native';
+import { Text, View, FlatList } from 'react-native';
 import SelfReportCard from './SelfReportCard';
 import Button from './elements/Button';
 import EmptyFolder from './icons/EmptyFolder';
@@ -38,10 +38,12 @@ export default function SelfReportList() {
   if (selfReports.length === 0) return <EmptyCondition />;
 
   return (
-    <View className='gap-y-8'>
-      {selfReports.map((report) => (
-        <SelfReportCard report={report} key={report.id} />
-      ))}
+    <View>
+      <Text className='mb-4 text-2xl font-bold text-neutral-500'>Tus autorregistros</Text>
+      <FlatList
+        data={selfReports}
+        renderItem={({ item }) => <SelfReportCard report={item} key={item.id} />}
+      />
     </View>
   );
 }
