@@ -5,6 +5,7 @@ import SelfReportCard from './SelfReportCard';
 import Button from './elements/Button';
 import EmptyFolder from './icons/EmptyFolder';
 import { ROUTES } from '../constants';
+import { deleteReport } from '../storage';
 
 const Empty = () => {
   const handleRedirect = () => {
@@ -32,7 +33,7 @@ const Empty = () => {
 SelfReportList.Emtpy = Empty;
 
 export default function SelfReportList() {
-  const { selfReports, error, isLoading } = useGetSelfReports();
+  const { selfReports, error, isLoading, refreshSelfReports } = useGetSelfReports();
 
   if (isLoading) return <Text>Loading...</Text>;
 
@@ -40,12 +41,20 @@ export default function SelfReportList() {
 
   if (selfReports.length === 0) return <SelfReportList.Emtpy />;
 
+  const handleDelete = async (id: number) => {
+    await deleteReport(id);
+
+    await refreshSelfReports();
+  };
+
   return (
     <View>
       <Text className='mb-4 text-2xl font-bold text-neutral-500'>Tus autorregistros</Text>
       <FlatList
         data={selfReports}
-        renderItem={({ item }) => <SelfReportCard report={item} key={item.id} />}
+        renderItem={({ item }) => (
+          <SelfReportCard report={item} key={item.id} handleDelete={handleDelete} />
+        )}
       />
     </View>
   );
