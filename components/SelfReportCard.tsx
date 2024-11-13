@@ -28,9 +28,11 @@ const QuestionAnswer = ({
 export default function SelfReportCard({
   report,
   handleDelete,
+  handleEdit,
 }: {
   report: SelfReport;
   handleDelete: (id: number) => void;
+  handleEdit: (id: number) => void;
 }) {
   const [show, setShow] = useState<boolean>(false);
 
@@ -68,7 +70,10 @@ export default function SelfReportCard({
           >
             <Trash width={16} height={16} stroke='#ef4444' />
           </TouchableOpacity>
-          <TouchableOpacity className='items-center p-1 rounded border border-neutral-200'>
+          <TouchableOpacity
+            className='items-center p-1 rounded border border-neutral-200'
+            onPress={() => handleEdit(report.id)}
+          >
             <Edit width={16} height={16} stroke='#525252' />
           </TouchableOpacity>
           <View className={`transition ease-in duration-250 ${show ? 'rotate-0' : 'rotate-180'}`}>

@@ -71,6 +71,10 @@ export default function SelfReportList() {
     [refreshSelfReports]
   );
 
+  const handleEdit = useCallback((id: number) => {
+    router.navigate(`${ROUTES.REPORTS}/${id}`);
+  }, []);
+
   if (isLoading) return <Text>Loading...</Text>;
 
   if (error) return <Text>{error}</Text>;
@@ -83,7 +87,12 @@ export default function SelfReportList() {
       <FlatList
         data={selfReports}
         renderItem={({ item }) => (
-          <SelfReportCard report={item} key={item.id} handleDelete={handleDelete} />
+          <SelfReportCard
+            report={item}
+            key={item.id}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
         )}
       />
     </View>
