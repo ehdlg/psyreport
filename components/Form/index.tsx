@@ -10,6 +10,7 @@ import QuestionWrapper from './QuestionWrapper';
 import DateTime from './DateTime';
 import Control from './Control';
 import ProgressBar from './ProgressBar';
+import { validate } from './validation';
 import { DEFAULT_FEELING_VALUE, DEFAULT_REPORT_VALUES, FEELING_LIMITS } from '../../constants';
 import { NewSelfReport } from '../../types';
 
@@ -129,39 +130,10 @@ export default function Form() {
     }
   };
 
-  const validate = (values: NewSelfReport) => {
-    const errors: any = {};
-
-    switch (step) {
-      case 0:
-        if (!values.date) {
-          errors.date = 'La fecha no puede estar vacía';
-        }
-        break;
-      case 1:
-        if (!values.antecedent) {
-          errors.antecedent = 'La situación no puede estar vacía';
-        }
-        break;
-      case 2:
-        if (!values.event.text) {
-          errors.event = 'Antes de continuar, describe el evento';
-        }
-        break;
-      case 3:
-        if (!values.thoughts) {
-          errors.thoughts = 'Antes de continuar, describe los pensamientos del evento';
-        }
-        break;
-    }
-
-    return errors;
-  };
-
   const formik = useFormik<NewSelfReport>({
     initialValues: DEFAULT_REPORT_VALUES,
     onSubmit,
-    validate,
+    validate: (values) => validate(values, step),
     validateOnChange: false,
   });
   const formControl = {
