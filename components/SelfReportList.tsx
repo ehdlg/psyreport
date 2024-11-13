@@ -5,7 +5,7 @@ import SelfReportCard from './SelfReportCard';
 import Button from './elements/Button';
 import EmptyFolder from './icons/EmptyFolder';
 
-const EmptyCondition = () => {
+const Empty = () => {
   const handleRedirect = () => {
     router.navigate('/new');
   };
@@ -28,6 +28,8 @@ const EmptyCondition = () => {
   );
 };
 
+SelfReportList.Emtpy = Empty;
+
 export default function SelfReportList() {
   const { selfReports, error, isLoading } = useGetSelfReports();
 
@@ -35,7 +37,7 @@ export default function SelfReportList() {
 
   if (error) return <Text>{error}</Text>;
 
-  if (selfReports.length === 0) return <EmptyCondition />;
+  if (selfReports.length === 0) return <SelfReportList.Emtpy />;
 
   return (
     <View>
