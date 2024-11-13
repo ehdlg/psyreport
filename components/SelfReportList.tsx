@@ -6,6 +6,8 @@ import Button from './elements/Button';
 import EmptyFolder from './icons/EmptyFolder';
 import { ROUTES } from '../constants';
 import { deleteReport } from '../storage';
+import { useCallback } from 'react';
+import Toast, { ToastOptions } from 'react-native-root-toast';
 
 const Empty = () => {
   const handleRedirect = () => {
@@ -35,17 +37,45 @@ SelfReportList.Emtpy = Empty;
 export default function SelfReportList() {
   const { selfReports, error, isLoading, refreshSelfReports } = useGetSelfReports();
 
+  const handleDelete = useCallback(
+    async (id: number) => {
+      let toastMessage: string = '';
+      let toastOptions: ToastOptions = {
+        duration: Toast.durations.SHORT,
+        animation: true,
+        position: Toast.positions.BOTTOM,
+      };
+      try {
+        await deleteReport(id);
+
+        await refreshSelfReports();
+
+        toastMessage = 'Autorregistro borrado';
+      } catch (error) {
+        toastMessage =
+          error instanceof Error
+            ? error.message
+            : 'Hubo un error al intentar borrar el autorregistro';
+
+        toastOptions = {
+          ...toastOptions,
+          duration: Toast.durations.SHORT,
+          backgroundColor: '#fecaca',
+          textColor: '#ef4444',
+          animation: true,
+        };
+      } finally {
+        Toast.show(toastMessage, toastOptions);
+      }
+    },
+    [refreshSelfReports]
+  );
+
   if (isLoading) return <Text>Loading...</Text>;
 
   if (error) return <Text>{error}</Text>;
 
   if (selfReports.length === 0) return <SelfReportList.Emtpy />;
-
-  const handleDelete = async (id: number) => {
-    await deleteReport(id);
-
-    await refreshSelfReports();
-  };
 
   return (
     <View>
