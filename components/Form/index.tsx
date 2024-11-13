@@ -1,8 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { useFormik } from 'formik';
 import Toast from 'react-native-root-toast';
-import { router } from 'expo-router';
-import { saveReport } from '../../storage/index';
 import { View } from 'react-native';
 import ReportTextInput from './ReportTextInput';
 import ReportFeelingInput from './ReportFeelingInput';
@@ -11,8 +9,8 @@ import DateTime from './DateTime';
 import Control from './Control';
 import ProgressBar from './ProgressBar';
 import { validate } from './validation';
-import { DEFAULT_FEELING_VALUE, DEFAULT_SELF_REPORT_VALUES, FEELING_LIMITS } from '../../constants';
-import { NewSelfReport } from '../../types';
+import { DEFAULT_FEELING_VALUE, FEELING_LIMITS } from '../../constants';
+import { FormValues } from '../../types';
 
 const Antecedent = ({
   antecedentValue,
@@ -38,7 +36,7 @@ const Event = ({
   handleEventText,
   updateFeeling,
 }: {
-  event: NewSelfReport['event'];
+  event: FormValues['event'];
   handleEventText: (e: ChangeEvent | any) => void;
   updateReportField: (field: string, value: string | number) => void;
   updateFeeling: (newValue: number) => () => void;
@@ -83,7 +81,7 @@ const Reflection = ({
   updateFeeling,
 }: {
   handleReflectionText: (e: ChangeEvent | any) => void;
-  reflection: NewSelfReport['reflections'];
+  reflection: FormValues['reflections'];
   updateFeeling: (newValue: number) => () => void;
 }) => {
   return (
@@ -111,27 +109,17 @@ Form.Event = Event;
 Form.Thought = Thought;
 Form.Reflection = Reflection;
 
-export default function Form() {
+export default function Form({
+  onSubmit,
+  formValues,
+}: {
+  onSubmit: (values: FormValues) => Promise<void>;
+  formValues: FormValues;
+}) {
   const [step, setStep] = useState<number>(0);
-  const onSubmit = async (values: NewSelfReport) => {
-    try {
-      await saveReport(values);
 
-      Toast.show('¡Autorregistro completado!', {
-        duration: Toast.durations.LONG,
-        position: Toast.positions.BOTTOM,
-      });
-    } catch (_error) {
-      Toast.show('Hubo un error al intentar guardar el autorregistro ', {
-        duration: Toast.durations.LONG,
-      });
-    } finally {
-      setTimeout(router.navigate, 50, '/');
-    }
-  };
-
-  const formik = useFormik<NewSelfReport>({
-    initialValues: DEFAULT_SELF_REPORT_VALUES,
+  const formik = useFormik<FormValues>({
+    initialValues: formValues,
     onSubmit,
     validate: (values) => validate(values, step),
     validateOnChange: false,
