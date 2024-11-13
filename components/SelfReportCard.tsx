@@ -84,7 +84,7 @@ export default function SelfReportCard({
       <View
         className={`p-4 border-t border-neutral-300 gap-y-4 w-full ${show ? 'block' : 'hidden'}`}
       >
-        <QuestionAnswer question={SELF_REPORT_QUESTIONS.antecedent} answer={report.antecedent} />
+        <QuestionAnswer question={SELF_REPORT_QUESTIONS.precedent} answer={report.precedent} />
         <QuestionAnswer
           question={SELF_REPORT_QUESTIONS.event}
           answer={report.event.text}

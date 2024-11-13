@@ -12,20 +12,20 @@ import { validate } from './validation';
 import { DEFAULT_FEELING_VALUE, FEELING_LIMITS } from '../../constants';
 import { FormValues } from '../../types';
 
-const Antecedent = ({
-  antecedentValue,
-  handleAntecedent,
+const Precedent = ({
+  precedentValue,
+  handlePrecedent,
 }: {
-  antecedentValue: string;
-  handleAntecedent: (e: ChangeEvent | any) => void;
+  precedentValue: string;
+  handlePrecedent: (e: ChangeEvent | any) => void;
 }) => {
   return (
     <QuestionWrapper>
       <ReportTextInput
-        handleReportValue={handleAntecedent}
+        handleReportValue={handlePrecedent}
         placeholder='Dónde estabas, qué hacías, con quién...'
-        reportValue={antecedentValue}
-        title='Antecedente'
+        reportValue={precedentValue}
+        title='Precedente'
       />
     </QuestionWrapper>
   );
@@ -104,7 +104,7 @@ const Reflection = ({
 Form.ProgressBar = ProgressBar;
 Form.DateTime = DateTime;
 Form.Control = Control;
-Form.Antedecent = Antecedent;
+Form.Antedecent = Precedent;
 Form.Event = Event;
 Form.Thought = Thought;
 Form.Reflection = Reflection;
@@ -183,8 +183,8 @@ export default function Form({
   const formOrder = [
     <Form.DateTime formikDate={new Date(formik.values.date)} setFieldValue={updateReportField} />,
     <Form.Antedecent
-      antecedentValue={formik.values.antecedent}
-      handleAntecedent={formik.handleChange('antecedent')}
+      precedentValue={formik.values.precedent}
+      handlePrecedent={formik.handleChange('precedent')}
     />,
     <Form.Event
       handleEventText={formik.handleChange('event.text')}

@@ -10,7 +10,7 @@ export const DEFAULT_FEELING_VALUE = Math.floor(FEELING_LIMITS.MAX / 2);
 
 export const DEFAULT_SELF_REPORT_VALUES: NewSelfReport = {
   date: CURRENT_DATETIME.toISOString(),
-  antecedent: '',
+  precedent: '',
   event: {
     feeling: DEFAULT_FEELING_VALUE,
     text: '',
@@ -27,7 +27,7 @@ export const STORAGE_KEY = 'reports';
 export const INITIAL_ID = 1;
 
 export const SELF_REPORT_QUESTIONS: Record<keyof Omit<NewSelfReport, 'id' | 'date'>, string> = {
-  antecedent: '¿Dónde estabas, qué hacías?',
+  precedent: '¿Dónde estabas, qué hacías?',
   event: '¿Qué ocurrió?',
   reflections: '¿Qué pensaste pasado un tiempo?',
   thoughts: '¿Qué pensanste?',

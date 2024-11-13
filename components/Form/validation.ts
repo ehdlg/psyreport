@@ -10,8 +10,8 @@ export const validate = (values: NewSelfReport, step: number) => {
       }
       break;
     case 1:
-      if (!values.antecedent) {
-        errors.antecedent = 'La situación no puede estar vacía';
+      if (!values.precedent) {
+        errors.precedent = 'La situación no puede estar vacía';
       }
       break;
     case 2:
