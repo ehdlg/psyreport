@@ -8,7 +8,7 @@ export const FEELING_LIMITS = {
 };
 export const DEFAULT_FEELING_VALUE = Math.floor(FEELING_LIMITS.MAX / 2);
 
-export const DEFAULT_REPORT_VALUES: NewSelfReport = {
+export const DEFAULT_SELF_REPORT_VALUES: NewSelfReport = {
   date: CURRENT_DATETIME.toISOString(),
   antecedent: '',
   event: {

@@ -11,7 +11,7 @@ import DateTime from './DateTime';
 import Control from './Control';
 import ProgressBar from './ProgressBar';
 import { validate } from './validation';
-import { DEFAULT_FEELING_VALUE, DEFAULT_REPORT_VALUES, FEELING_LIMITS } from '../../constants';
+import { DEFAULT_FEELING_VALUE, DEFAULT_SELF_REPORT_VALUES, FEELING_LIMITS } from '../../constants';
 import { NewSelfReport } from '../../types';
 
 const Antecedent = ({
@@ -131,7 +131,7 @@ export default function Form() {
   };
 
   const formik = useFormik<NewSelfReport>({
-    initialValues: DEFAULT_REPORT_VALUES,
+    initialValues: DEFAULT_SELF_REPORT_VALUES,
     onSubmit,
     validate: (values) => validate(values, step),
     validateOnChange: false,
