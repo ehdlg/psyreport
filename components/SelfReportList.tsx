@@ -4,10 +4,11 @@ import { Text, View, FlatList } from 'react-native';
 import SelfReportCard from './SelfReportCard';
 import Button from './elements/Button';
 import EmptyFolder from './icons/EmptyFolder';
+import { ROUTES } from '../constants';
 
 const Empty = () => {
   const handleRedirect = () => {
-    router.navigate('/new');
+    router.navigate(ROUTES.NEW);
   };
 
   return (
