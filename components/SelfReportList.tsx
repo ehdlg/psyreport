@@ -79,7 +79,7 @@ export default function SelfReportList() {
 
   return (
     <View>
-      <Text className='mb-4 text-2xl font-bold text-neutral-500'>Tus autorregistros</Text>
+      <Text className='mb-4 text-2xl font-bold text-neutral-600'>Tus autorregistros</Text>
       <FlatList
         data={selfReports}
         renderItem={({ item }) => (
