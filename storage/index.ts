@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { INITIAL_ID, STORAGE_KEY } from '../constants';
-import { NewSelfReport, SelfReport } from '../types';
+import { FormValues, NewSelfReport, SelfReport } from '../types';
 
 // TODO: better error handling
 
@@ -56,5 +56,21 @@ export const deleteReport = async (id: number) => {
     await setReports(newReports);
   } catch (_error) {
     throw new Error('No se pudo borrar el autorregistro');
+  }
+};
+
+export const editReport = async (id: number, newValues: FormValues) => {
+  try {
+    const savedReports = await getReports();
+
+    const reportIndex = savedReports.findIndex((savedReport) => savedReport.id === id);
+
+    if (reportIndex === -1) throw new Error('Autorregistro no encontrado');
+
+    savedReports[reportIndex] = { ...savedReports[reportIndex], ...newValues };
+
+    await setReports(savedReports);
+  } catch (error) {
+    throw error;
   }
 };
