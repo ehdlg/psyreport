@@ -24,6 +24,20 @@ export const getReports = async () => {
   }
 };
 
+export const getReportById = async (id: number) => {
+  try {
+    const reports = await getReports();
+
+    const report = reports.find((savedReport) => savedReport.id === id);
+
+    if (null == report) throw new Error('Autorregistro no encontrado');
+
+    return report;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const generateId = (reports: SelfReport[] | undefined) => {
   if (null == reports || reports.length === 0) return INITIAL_ID;
 
