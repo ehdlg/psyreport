@@ -20,6 +20,7 @@ export const DEFAULT_SELF_REPORT_VALUES: NewSelfReport = {
     text: '',
   },
   thoughts: '',
+  otherActions: '',
 };
 
 export const STORAGE_KEY = 'reports';
@@ -31,6 +32,7 @@ export const SELF_REPORT_QUESTIONS: Record<keyof Omit<NewSelfReport, 'id' | 'dat
   event: '¿Qué ocurrió?',
   reflections: '¿Qué pensaste pasado un tiempo?',
   thoughts: '¿Qué pensanste?',
+  otherActions: '¿Qué hicieron despues las otras personas?',
 };
 
 export const ROUTES = {
