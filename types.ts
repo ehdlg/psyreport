@@ -3,12 +3,12 @@ export type SelfReport = {
   date: string;
   precedent: string;
   event: {
-    feeling: number;
+    discomfort: number;
     text: string;
   };
   thoughts: string;
   reflections: {
-    feeling: number | null;
+    discomfort: number | null;
     text: string | null;
   };
 };

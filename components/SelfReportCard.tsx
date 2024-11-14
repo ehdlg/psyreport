@@ -88,14 +88,14 @@ export default function SelfReportCard({
         <QuestionAnswer
           question={SELF_REPORT_QUESTIONS.event}
           answer={report.event.text}
-          discomfort={report.event.feeling}
+          discomfort={report.event.discomfort}
         />
         <QuestionAnswer question={SELF_REPORT_QUESTIONS.thoughts} answer={report.thoughts} />
         {report.reflections.text && (
           <QuestionAnswer
             question={SELF_REPORT_QUESTIONS.reflections}
             answer={report.reflections.text}
-            discomfort={report.reflections.feeling}
+            discomfort={report.reflections.discomfort}
           />
         )}
       </View>

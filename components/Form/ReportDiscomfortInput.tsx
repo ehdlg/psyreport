@@ -1,22 +1,22 @@
 import { View, Text, TouchableOpacity } from 'react-native';
-import { FEELING_LIMITS } from '../../constants';
+import { DISCOMFORT_LIMITS } from '../../constants';
 
 const Icon = ({
   text,
-  updateFeeling,
-  feelingValue,
+  updateDiscomfort,
+  discomfortValue,
 }: {
   text: '+' | '-';
-  updateFeeling: () => void;
-  feelingValue: number;
+  updateDiscomfort: () => void;
+  discomfortValue: number;
 }) => {
   const disabledButton =
-    (text === '+' && FEELING_LIMITS.MAX === feelingValue) ||
-    (text === '-' && FEELING_LIMITS.MIN === feelingValue);
+    (text === '+' && DISCOMFORT_LIMITS.MAX === discomfortValue) ||
+    (text === '-' && DISCOMFORT_LIMITS.MIN === discomfortValue);
 
   return (
     <TouchableOpacity
-      onPress={updateFeeling}
+      onPress={updateDiscomfort}
       className={`flex-row justify-center items-center text-center rounded-full border border-neutral-200 bg-neutral-50 size-10 ${
         disabledButton && 'opacity-25'
       }`}
@@ -26,12 +26,12 @@ const Icon = ({
     </TouchableOpacity>
   );
 };
-export default function ReportFeelingInput({
-  updateFeeling,
-  feelingValue,
+export default function ReportDiscomfortInput({
+  updateDiscomfort,
+  discomfortValue,
 }: {
-  updateFeeling: (newValue: number) => () => void;
-  feelingValue: number;
+  updateDiscomfort: (newValue: number) => () => void;
+  discomfortValue: number;
 }) {
   return (
     <View className='gap-y-2 mt-8'>
@@ -39,15 +39,15 @@ export default function ReportFeelingInput({
       {/* TODO: use + and - svg instead */}
       <View className='flex-row gap-x-6 justify-center items-center'>
         <Icon
-          feelingValue={feelingValue}
+          discomfortValue={discomfortValue}
           text='-'
-          updateFeeling={updateFeeling(feelingValue - 1)}
+          updateDiscomfort={updateDiscomfort(discomfortValue - 1)}
         />
-        <Text className='text-2xl text-neutral-700'>{feelingValue}</Text>
+        <Text className='text-2xl text-neutral-700'>{discomfortValue}</Text>
         <Icon
-          feelingValue={feelingValue}
+          discomfortValue={discomfortValue}
           text='+'
-          updateFeeling={updateFeeling(feelingValue + 1)}
+          updateDiscomfort={updateDiscomfort(discomfortValue + 1)}
         />
       </View>
     </View>

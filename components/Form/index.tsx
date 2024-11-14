@@ -3,13 +3,13 @@ import { useFormik } from 'formik';
 import Toast from 'react-native-root-toast';
 import { View } from 'react-native';
 import ReportTextInput from './ReportTextInput';
-import ReportFeelingInput from './ReportFeelingInput';
+import ReportDiscomfortInput from './ReportDiscomfortInput';
 import QuestionWrapper from './QuestionWrapper';
 import DateTime from './DateTime';
 import Control from './Control';
 import ProgressBar from './ProgressBar';
 import { validate } from './validation';
-import { DEFAULT_FEELING_VALUE, FEELING_LIMITS } from '../../constants';
+import { DEFAULT_DISCOMFORT_VALUE, DISCOMFORT_LIMITS } from '../../constants';
 import { FormValues } from '../../types';
 
 const Precedent = ({
@@ -34,12 +34,12 @@ const Precedent = ({
 const Event = ({
   event,
   handleEventText,
-  updateFeeling,
+  updateDiscomfort,
 }: {
   event: FormValues['event'];
   handleEventText: (e: ChangeEvent | any) => void;
   updateReportField: (field: string, value: string | number) => void;
-  updateFeeling: (newValue: number) => () => void;
+  updateDiscomfort: (newValue: number) => () => void;
 }) => {
   return (
     <QuestionWrapper>
@@ -50,7 +50,10 @@ const Event = ({
         placeholder='Detalla lo que ocurrió'
       />
       <View className='gap-y-2'>
-        <ReportFeelingInput feelingValue={event.feeling} updateFeeling={updateFeeling} />
+        <ReportDiscomfortInput
+          discomfortValue={event.discomfort}
+          updateDiscomfort={updateDiscomfort}
+        />
       </View>
     </QuestionWrapper>
   );
@@ -78,11 +81,11 @@ const Thought = ({
 const Reflection = ({
   handleReflectionText,
   reflection,
-  updateFeeling,
+  updateDiscomfort,
 }: {
   handleReflectionText: (e: ChangeEvent | any) => void;
   reflection: FormValues['reflections'];
-  updateFeeling: (newValue: number) => () => void;
+  updateDiscomfort: (newValue: number) => () => void;
 }) => {
   return (
     <QuestionWrapper>
@@ -93,9 +96,9 @@ const Reflection = ({
         placeholder='Qué pensaste, cómo viste la situación al cabo de un tiempo'
       />
 
-      <ReportFeelingInput
-        feelingValue={reflection.feeling || DEFAULT_FEELING_VALUE}
-        updateFeeling={updateFeeling}
+      <ReportDiscomfortInput
+        discomfortValue={reflection.discomfort || DEFAULT_DISCOMFORT_VALUE}
+        updateDiscomfort={updateDiscomfort}
       />
     </QuestionWrapper>
   );
@@ -163,19 +166,19 @@ export default function Form({
     formik.setFieldValue(field, value);
   };
 
-  const updateFeeling = (field: 'event.feeling' | 'reflections.feeling') => {
+  const updateDiscomfort = (field: 'event.discomfort' | 'reflections.discomfort') => {
     return function (newValue: number) {
       return function () {
-        const newFeelingValue = Number(newValue);
+        const newDiscomfortValue = Number(newValue);
 
         if (
-          isNaN(newFeelingValue) ||
-          newFeelingValue > FEELING_LIMITS.MAX ||
-          newFeelingValue < FEELING_LIMITS.MIN
+          isNaN(newDiscomfortValue) ||
+          newDiscomfortValue > DISCOMFORT_LIMITS.MAX ||
+          newDiscomfortValue < DISCOMFORT_LIMITS.MIN
         )
           return;
 
-        updateReportField(field, newFeelingValue);
+        updateReportField(field, newDiscomfortValue);
       };
     };
   };
@@ -190,7 +193,7 @@ export default function Form({
       handleEventText={formik.handleChange('event.text')}
       event={formik.values.event}
       updateReportField={updateReportField}
-      updateFeeling={updateFeeling('event.feeling')}
+      updateDiscomfort={updateDiscomfort('event.discomfort')}
     />,
     <Form.Thought
       handleThought={formik.handleChange('thoughts')}
@@ -199,7 +202,7 @@ export default function Form({
     <Form.Reflection
       handleReflectionText={formik.handleChange('reflections.text')}
       reflection={formik.values.reflections}
-      updateFeeling={updateFeeling('reflections.feeling')}
+      updateDiscomfort={updateDiscomfort('reflections.discomfort')}
     />,
   ];
 

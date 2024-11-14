@@ -2,21 +2,21 @@ import { NewSelfReport } from './types';
 
 export const CURRENT_DATETIME = new Date(Date.now());
 
-export const FEELING_LIMITS = {
+export const DISCOMFORT_LIMITS = {
   MIN: 1,
   MAX: 10,
 };
-export const DEFAULT_FEELING_VALUE = Math.floor(FEELING_LIMITS.MAX / 2);
+export const DEFAULT_DISCOMFORT_VALUE = Math.floor(DISCOMFORT_LIMITS.MAX / 2);
 
 export const DEFAULT_SELF_REPORT_VALUES: NewSelfReport = {
   date: CURRENT_DATETIME.toISOString(),
   precedent: '',
   event: {
-    feeling: DEFAULT_FEELING_VALUE,
+    discomfort: DEFAULT_DISCOMFORT_VALUE,
     text: '',
   },
   reflections: {
-    feeling: DEFAULT_FEELING_VALUE,
+    discomfort: DEFAULT_DISCOMFORT_VALUE,
     text: '',
   },
   thoughts: '',
