@@ -16,7 +16,7 @@ const Precedent = ({
   precedentValue,
   handlePrecedent,
 }: {
-  precedentValue: string;
+  precedentValue: FormValues['precedent'];
   handlePrecedent: (e: ChangeEvent | any) => void;
 }) => {
   const { title, placeholder } = FORM_QUESTIONS.precedent;
@@ -66,7 +66,7 @@ const Thought = ({
   thoughtValue,
   handleThought,
 }: {
-  thoughtValue: string;
+  thoughtValue: FormValues['thoughts'];
   handleThought: (e: ChangeEvent | any) => void;
 }) => {
   const { title, placeholder } = FORM_QUESTIONS.thoughts;
