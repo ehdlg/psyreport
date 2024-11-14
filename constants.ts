@@ -40,3 +40,30 @@ export const ROUTES = {
   NEW: '/new',
   REPORTS: '/reports',
 };
+
+export const FORM_QUESTIONS: Record<keyof NewSelfReport, { title: string; placeholder?: string }> =
+  {
+    date: {
+      title: '¿Cuándo ocurrió?',
+    },
+    precedent: {
+      title: 'Situación precedente',
+      placeholder: 'Dónde estaba, qué hacía, con quién...',
+    },
+    event: {
+      title: '¿Qué ocurrió?',
+      placeholder: 'Qué hizo, cómo se sintió, qué penso en ese momento...',
+    },
+    thoughts: {
+      title: '¿Que pensó después?',
+      placeholder: 'Pasado un timepo, qué pensó de la situación, su reacción...',
+    },
+    reflections: {
+      title: '¿Cómo se sintió después?',
+      placeholder: 'Descibra como se sintió pasado un tiempo de la situacíon',
+    },
+    otherActions: {
+      title: '¿Qué hicieron después las otras personas?',
+      placeholder: 'Si había alguien involucrado, como actuó, que hizo o dijo pasado un tiempo',
+    },
+  };
