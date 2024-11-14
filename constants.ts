@@ -56,11 +56,11 @@ export const FORM_QUESTIONS: Record<keyof NewSelfReport, { title: string; placeh
     },
     thoughts: {
       title: '¿Que pensó después?',
-      placeholder: 'Pasado un timepo, qué pensó de la situación, su reacción...',
+      placeholder: 'Pasado un tiempo, qué pensó de la situación, su reacción...',
     },
     reflections: {
       title: '¿Cómo se sintió después?',
-      placeholder: 'Descibra como se sintió pasado un tiempo de la situacíon',
+      placeholder: 'Describa como se sintió pasado un tiempo de la situacíon',
     },
     otherActions: {
       title: '¿Qué hicieron después las otras personas?',

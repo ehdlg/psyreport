@@ -9,7 +9,7 @@ import DateTime from './DateTime';
 import Control from './Control';
 import ProgressBar from './ProgressBar';
 import { validate } from './validation';
-import { DEFAULT_DISCOMFORT_VALUE, DISCOMFORT_LIMITS } from '../../constants';
+import { DEFAULT_DISCOMFORT_VALUE, DISCOMFORT_LIMITS, FORM_QUESTIONS } from '../../constants';
 import { FormValues } from '../../types';
 
 const Precedent = ({
@@ -19,13 +19,14 @@ const Precedent = ({
   precedentValue: string;
   handlePrecedent: (e: ChangeEvent | any) => void;
 }) => {
+  const { title, placeholder } = FORM_QUESTIONS.precedent;
   return (
     <QuestionWrapper>
       <ReportTextInput
         handleReportValue={handlePrecedent}
-        placeholder='Dónde estabas, qué hacías, con quién...'
+        placeholder={placeholder}
         reportValue={precedentValue}
-        title='Precedente'
+        title={title}
       />
     </QuestionWrapper>
   );
@@ -41,13 +42,15 @@ const Event = ({
   updateReportField: (field: string, value: string | number) => void;
   updateDiscomfort: (newValue: number) => () => void;
 }) => {
+  const { title, placeholder } = FORM_QUESTIONS.event;
+
   return (
     <QuestionWrapper>
       <ReportTextInput
         handleReportValue={handleEventText}
         reportValue={event.text}
-        title='Evento'
-        placeholder='Detalla lo que ocurrió'
+        title={title}
+        placeholder={placeholder}
       />
       <View className='gap-y-2'>
         <ReportDiscomfortInput
@@ -66,13 +69,15 @@ const Thought = ({
   thoughtValue: string;
   handleThought: (e: ChangeEvent | any) => void;
 }) => {
+  const { title, placeholder } = FORM_QUESTIONS.thoughts;
+
   return (
     <QuestionWrapper>
       <ReportTextInput
-        title='Pensamiento'
+        title={title}
         handleReportValue={handleThought}
         reportValue={thoughtValue}
-        placeholder='Qué pensaste de la situación pasado un tiempo'
+        placeholder={placeholder}
       />
     </QuestionWrapper>
   );
@@ -87,13 +92,14 @@ const Reflection = ({
   reflection: FormValues['reflections'];
   updateDiscomfort: (newValue: number) => () => void;
 }) => {
+  const { title, placeholder } = FORM_QUESTIONS.reflections;
   return (
     <QuestionWrapper>
       <ReportTextInput
-        title='Reflexiones'
+        title={title}
         handleReportValue={handleReflectionText}
         reportValue={reflection.text}
-        placeholder='Qué pensaste, cómo viste la situación al cabo de un tiempo'
+        placeholder={placeholder}
       />
 
       <ReportDiscomfortInput
@@ -111,13 +117,15 @@ const OtherPeopleActions = ({
   handleOtherPeopleActions: (e: ChangeEvent | any) => void;
   otherPeopleActions: FormValues['otherActions'];
 }) => {
+  const { title, placeholder } = FORM_QUESTIONS.otherActions;
+
   return (
     <QuestionWrapper>
       <ReportTextInput
-        title='Reflexiones'
+        title={title}
         handleReportValue={handleOtherPeopleActions}
         reportValue={otherPeopleActions}
-        placeholder='¿Qué hicieron después otras personas?'
+        placeholder={placeholder}
       />
     </QuestionWrapper>
   );

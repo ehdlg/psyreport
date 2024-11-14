@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import Button from '../elements/Button';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { formatDateWithTime } from '../../utils';
-import { CURRENT_DATETIME } from '../../constants';
+import { CURRENT_DATETIME, FORM_QUESTIONS } from '../../constants';
 
 export default function DateTime({
   formikDate,
@@ -34,9 +34,10 @@ export default function DateTime({
     setShowDate(false);
     setFieldValue('date', currentDate);
   };
+  const { title } = FORM_QUESTIONS.date;
   return (
     <>
-      <Text className='text-xl text-center text-neutral-500'>¿Cuándo ocurrió?</Text>
+      <Text className='text-xl text-center text-neutral-500'>{title}</Text>
       <View className='flex flew-row'>
         <View className='flex-row justify-around'>
           <Button type='tertiary' title='Establecer el día' onPress={() => showMode('date')} />
