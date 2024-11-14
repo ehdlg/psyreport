@@ -11,6 +11,7 @@ export type SelfReport = {
     discomfort: number | null;
     text: string | null;
   };
+  otherActions: string | null;
 };
 
 export type NewSelfReport = Omit<SelfReport, 'id'>;
