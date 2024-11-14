@@ -98,6 +98,12 @@ export default function SelfReportCard({
             discomfort={report.reflections.discomfort}
           />
         )}
+        {report.otherActions && (
+          <QuestionAnswer
+            question={SELF_REPORT_QUESTIONS.otherActions}
+            answer={report.otherActions}
+          />
+        )}
       </View>
     </TouchableOpacity>
   );

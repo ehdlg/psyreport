@@ -104,6 +104,25 @@ const Reflection = ({
   );
 };
 
+const OtherPeopleActions = ({
+  handleOtherPeopleActions,
+  otherPeopleActions,
+}: {
+  handleOtherPeopleActions: (e: ChangeEvent | any) => void;
+  otherPeopleActions: FormValues['otherActions'];
+}) => {
+  return (
+    <QuestionWrapper>
+      <ReportTextInput
+        title='Reflexiones'
+        handleReportValue={handleOtherPeopleActions}
+        reportValue={otherPeopleActions}
+        placeholder='¿Qué hicieron después otras personas?'
+      />
+    </QuestionWrapper>
+  );
+};
+
 Form.ProgressBar = ProgressBar;
 Form.DateTime = DateTime;
 Form.Control = Control;
@@ -111,6 +130,7 @@ Form.Antedecent = Precedent;
 Form.Event = Event;
 Form.Thought = Thought;
 Form.Reflection = Reflection;
+Form.OtherPeopleActions = OtherPeopleActions;
 
 export default function Form({
   onSubmit,
@@ -160,7 +180,7 @@ export default function Form({
   // TODO: Modify these values so they are not 'magic numbers' using formOrder length
   const stepLimits = {
     MIN: 0,
-    MAX: 4,
+    MAX: 5,
   };
   const updateReportField = (field: string, value: string | number) => {
     formik.setFieldValue(field, value);
@@ -203,6 +223,10 @@ export default function Form({
       handleReflectionText={formik.handleChange('reflections.text')}
       reflection={formik.values.reflections}
       updateDiscomfort={updateDiscomfort('reflections.discomfort')}
+    />,
+    <Form.OtherPeopleActions
+      handleOtherPeopleActions={formik.handleChange('otherActions')}
+      otherPeopleActions={formik.values.otherActions}
     />,
   ];
 
