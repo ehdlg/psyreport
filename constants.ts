@@ -3,7 +3,7 @@ import { NewSelfReport } from './types';
 export const CURRENT_DATETIME = new Date(Date.now());
 
 export const DISCOMFORT_LIMITS = {
-  MIN: 1,
+  MIN: 0,
   MAX: 10,
 };
 export const DEFAULT_DISCOMFORT_VALUE = Math.floor(DISCOMFORT_LIMITS.MAX / 2);
