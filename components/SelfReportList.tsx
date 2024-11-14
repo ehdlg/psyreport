@@ -8,6 +8,7 @@ import { ROUTES } from '../constants';
 import { deleteReport } from '../storage';
 import { useCallback } from 'react';
 import Toast, { ToastOptions } from 'react-native-root-toast';
+import Loading from './Loading';
 
 const Empty = () => {
   const handleRedirect = () => {
@@ -75,7 +76,7 @@ export default function SelfReportList() {
     router.navigate(`${ROUTES.REPORTS}/${id}`);
   }, []);
 
-  if (isLoading) return <Text>Loading...</Text>;
+  if (isLoading) return <Loading />;
 
   if (error) return <Text>{error}</Text>;
 
