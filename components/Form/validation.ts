@@ -6,22 +6,17 @@ export const validate = (values: NewSelfReport, step: number) => {
   switch (step) {
     case 0:
       if (!values.date) {
-        errors.date = 'La fecha no puede estar vacía';
+        errors.date = 'Antes de continuar, establece la fecha y hora del evento';
       }
       break;
     case 1:
       if (!values.precedent) {
-        errors.precedent = 'La situación no puede estar vacía';
+        errors.precedent = 'Antes de continuar, describe la situación precedente';
       }
       break;
     case 2:
       if (!values.event.text) {
         errors.event = 'Antes de continuar, describe el evento';
-      }
-      break;
-    case 3:
-      if (!values.thoughts) {
-        errors.thoughts = 'Antes de continuar, describe los pensamientos del evento';
       }
       break;
   }
