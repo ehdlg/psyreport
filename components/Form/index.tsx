@@ -9,7 +9,12 @@ import DateTime from './DateTime';
 import Control from './Control';
 import ProgressBar from './ProgressBar';
 import { validate } from './validation';
-import { DEFAULT_DISCOMFORT_VALUE, DISCOMFORT_LIMITS, FORM_QUESTIONS } from '../../constants';
+import {
+  DEFAULT_DISCOMFORT_VALUE,
+  DISCOMFORT_LIMITS,
+  FORM_QUESTIONS,
+  INITAL_FORM_STEP,
+} from '../../constants';
 import { FormValues } from '../../types';
 
 const Precedent = ({
@@ -143,11 +148,13 @@ Form.OtherPeopleActions = OtherPeopleActions;
 export default function Form({
   onSubmit,
   formValues,
+  initialStep = INITAL_FORM_STEP,
 }: {
   onSubmit: (values: FormValues) => Promise<void>;
   formValues: FormValues;
+  initialStep?: number;
 }) {
-  const [step, setStep] = useState<number>(0);
+  const [step, setStep] = useState<number>(initialStep);
 
   const formik = useFormik<FormValues>({
     initialValues: formValues,
