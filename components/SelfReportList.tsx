@@ -20,10 +20,10 @@ const Empty = () => {
       <View className='mx-auto'>
         <EmptyFolder width={120} height={120} />
       </View>
-      <Text className='text-2xl font-bold text-center text-neutral-700 text-pretty'>
+      <Text className='text-2xl font-bold text-center text-slate-700 dark:text-slate-300 text-pretty'>
         Tu lista de autorregistros está vacía
       </Text>
-      <Text className='text-lg text-center text-neutral-500'>
+      <Text className='text-lg text-center text-slate-500 dark:text-slate-400'>
         Crea un nuevo autorregistro y aparecerá aqui
       </Text>
       <View className='mx-auto mt-6 w-1/2'>
@@ -84,7 +84,9 @@ export default function SelfReportList() {
 
   return (
     <View>
-      <Text className='mb-4 text-2xl font-bold text-neutral-600'>Tus autorregistros</Text>
+      <Text className='mb-4 text-2xl font-bold text-slate-800 dark:text-slate-200'>
+        Tus autorregistros
+      </Text>
       <FlatList
         data={selfReports}
         renderItem={({ item }) => (

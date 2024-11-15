@@ -6,6 +6,7 @@ import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import { SelfReport } from '../types';
 import { formatDateWithTime } from '../utils';
 import { SELF_REPORT_QUESTIONS } from '../constants';
+import { useColorScheme } from 'nativewind';
 
 const QuestionAnswer = ({
   question,
@@ -18,9 +19,13 @@ const QuestionAnswer = ({
 }) => {
   return (
     <View>
-      <Text className='mb-1 font-bold text-neutral-600'>{question}</Text>
-      {discomfort && <Text className='text-neutral-600'>Malestar: {discomfort}</Text>}
-      <Text className='leading-normal text-neutral-600 text-pretty'>{answer}</Text>
+      <Text className='mb-1 font-bold text-slate-800 dark:text-slate-200'>{question}</Text>
+      {discomfort && (
+        <Text className='text-slate-600 dark:text-slate-300'>Malestar: {discomfort}</Text>
+      )}
+      <Text className='leading-normal text-slate-700 dark:text-slate-300 text-pretty'>
+        {answer}
+      </Text>
     </View>
   );
 };
@@ -41,14 +46,16 @@ export default function SelfReportCard({
   }, [show]);
 
   const reportDate = new Date(report.date);
+  const { colorScheme } = useColorScheme();
+  const darkMode = colorScheme === 'dark';
 
   return (
     <TouchableOpacity
-      className='gap-x-8 items-center p-4 my-2 rounded-xl border bg-neutral-50 border-neutral-200'
+      className='gap-x-8 items-center p-4 my-2 rounded-xl border bg-slate-50 border-slate-200 dark:bg-slate-800 dark:border-slate-700'
       onPress={handleShow}
     >
       <View className='flex-row justify-between items-center mb-2 w-full'>
-        <Text className='text-lg font-semibold text-neutral-600'>
+        <Text className='text-lg font-semibold text-slate-700 dark:text-slate-300'>
           {formatDateWithTime(reportDate)}
         </Text>
         <View className='flex-row gap-x-4 items-center'>
@@ -66,15 +73,15 @@ export default function SelfReportCard({
                 },
               ]);
             }}
-            className='p-1 rounded border border-neutral-200'
+            className='p-1 rounded border border-slate-200 dark:border-slate-700'
           >
             <Trash width={16} height={16} stroke='#ef4444' />
           </TouchableOpacity>
           <TouchableOpacity
-            className='items-center p-1 rounded border border-neutral-200'
+            className='items-center p-1 rounded border border-slate-200 dark:border-slate-700'
             onPress={() => handleEdit(report.id)}
           >
-            <Edit width={16} height={16} stroke='#525252' />
+            <Edit width={16} height={16} stroke={darkMode ? '#e0e7ff' : '#525252'} />
           </TouchableOpacity>
           <View className={`transition ease-in duration-250 ${show ? 'rotate-0' : 'rotate-180'}`}>
             <AngleDown fill='#818cf8' height={16} width={16} />
@@ -82,7 +89,9 @@ export default function SelfReportCard({
         </View>
       </View>
       <View
-        className={`p-4 border-t border-neutral-300 gap-y-4 w-full ${show ? 'block' : 'hidden'}`}
+        className={`p-4 border-t border-slate-300 dark:border-slate-600 gap-y-4 w-full ${
+          show ? 'block' : 'hidden'
+        }`}
       >
         <QuestionAnswer question={SELF_REPORT_QUESTIONS.precedent} answer={report.precedent} />
         <QuestionAnswer

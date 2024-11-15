@@ -247,7 +247,7 @@ export default function Form({
   if (invalidForm) showErrors();
 
   return (
-    <View className='gap-y-4 pt-6 w-full rounded-xl border drop-shadow-xl justify-betweeen border-neutral-200'>
+    <View className='gap-y-4 pt-6 w-full rounded-xl border drop-shadow-xl justify-betweeen border-slate-200 dark:border-slate-700'>
       <Form.ProgressBar currentStep={step} numberOfSteps={formOrder.length} />
       {formOrder[step]}
       <Form.Control formControl={formControl} step={step} stepLimits={stepLimits} />

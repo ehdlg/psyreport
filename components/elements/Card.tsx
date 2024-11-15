@@ -7,7 +7,8 @@ export default function Card({
   href,
   styles = '',
 }: PropsWithChildren & { href: string; styles?: string }) {
-  const DEFAULT_STYLES = 'p-6 text-center rounded-lg border border-neutral-200 drop-shadow-sm ';
+  const DEFAULT_STYLES =
+    'p-6 text-center rounded-lg border border-slate-200 dark:border-slate-700 drop-shadow-sm ';
   const navigateTo = () => {
     return router.navigate(href);
   };

@@ -37,7 +37,7 @@ export default function DateTime({
   const { title } = FORM_QUESTIONS.date;
   return (
     <>
-      <Text className='text-xl text-center text-neutral-500'>{title}</Text>
+      <Text className='text-xl text-center text-slate-600 dark:text-slate-300'>{title}</Text>
       <View className='flex flew-row'>
         <View className='flex-row justify-around'>
           <Button type='tertiary' title='Establecer el día' onPress={() => showMode('date')} />
@@ -51,7 +51,7 @@ export default function DateTime({
             maximumDate={CURRENT_DATETIME}
           />
         )}
-        <Text className='my-4 text-lg text-center text-neutral-500'>
+        <Text className='my-4 text-lg text-center text-slate-500 dark:text-slate-300'>
           {formatDateWithTime(formikDate)}
         </Text>
       </View>

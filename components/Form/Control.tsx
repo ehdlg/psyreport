@@ -15,7 +15,7 @@ export default function Control({
   stepLimits: { MIN: number; MAX: number };
 }) {
   return (
-    <View className='flex-row justify-around p-4 rounded-b-xl bg-neutral-50'>
+    <View className='flex-row justify-around p-4 rounded-b-xl bg-slate-50 dark:bg-slate-700/20'>
       {step > stepLimits.MIN && (
         <Button type='secondary' title='Anterior' onPress={formControl.prev} />
       )}

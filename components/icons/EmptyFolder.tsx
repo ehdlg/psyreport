@@ -1,17 +1,20 @@
 import * as React from 'react';
+import { useColorScheme } from 'nativewind';
 import Svg, { G, Path } from 'react-native-svg';
 
 function EmptyFolder(props: any) {
+  const { colorScheme } = useColorScheme();
+  const darkMode = colorScheme === 'dark';
+
   return (
     <Svg
       viewBox='0 0 24 24'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
-      stroke='red'
       strokeWidth={0.528}
       {...props}
     >
-      <G stroke='#222'>
+      <G stroke={darkMode ? '#e0e7ff' : '#1e293b'}>
         <Path
           d='M3.5 15V6.9c0-.84 0-1.26.163-1.581a1.5 1.5 0 01.656-.656c.32-.163.74-.163 1.581-.163h2.572c.376 0 .564 0 .734.052a1.2 1.2 0 01.414.221c.137.113.242.27.45.582l.86 1.29c.208.313.313.47.45.582.122.1.263.176.413.222.171.051.359.051.735.051H16.5c.465 0 .697 0 .888.051a1.5 1.5 0 011.061 1.061c.051.191.051.423.051.888v0m-8 4h6'
           strokeLinecap='round'
