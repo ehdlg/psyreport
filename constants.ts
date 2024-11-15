@@ -67,3 +67,5 @@ export const FORM_QUESTIONS: Record<keyof NewSelfReport, { title: string; placeh
       placeholder: 'Si había alguien involucrado, como actuó, que hizo o dijo pasado un tiempo',
     },
   };
+
+export const INITAL_FORM_STEP = 0;
