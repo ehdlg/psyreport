@@ -19,7 +19,7 @@ const QuestionAnswer = ({
 }) => {
   return (
     <View>
-      <Text className='mb-1 font-bold text-slate-800 dark:text-slate-200'>{question}</Text>
+      <Text className='mb-1 font-bold text-slate-700 dark:text-slate-200'>{question}</Text>
       {discomfort && (
         <Text className='text-slate-600 dark:text-slate-300'>Malestar: {discomfort}</Text>
       )}
@@ -51,11 +51,11 @@ export default function SelfReportCard({
 
   return (
     <TouchableOpacity
-      className='gap-x-8 items-center p-4 my-2 rounded-xl border bg-slate-50 border-slate-200 dark:bg-slate-800 dark:border-slate-700'
+      className='gap-x-8 items-center p-4 my-2 rounded-xl border border-slate-200 dark:bg-slate-800 dark:border-slate-700'
       onPress={handleShow}
     >
       <View className='flex-row justify-between items-center mb-2 w-full'>
-        <Text className='text-lg font-semibold text-slate-700 dark:text-slate-300'>
+        <Text className='text-lg text-slate-700 dark:text-slate-300'>
           {formatDateWithTime(reportDate)}
         </Text>
         <View className='flex-row gap-x-4 items-center'>
