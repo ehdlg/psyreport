@@ -2,12 +2,13 @@ import { useCallback } from 'react';
 import { router, useLocalSearchParams, Redirect } from 'expo-router';
 import { Text } from 'react-native';
 import Form from './Form';
+import Loading from './Loading';
 import Toast from 'react-native-root-toast';
 import useGetSelfReport from '../hooks/useGetSelfReport';
 import { ROUTES } from '../constants';
 import { editReport } from '../storage';
 import { FormValues } from '../types';
-import Loading from './Loading';
+import { getEditStep } from '../utils';
 
 export default function EditSelfReport() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -32,5 +33,7 @@ export default function EditSelfReport() {
 
   if (null == report) return <Redirect href={ROUTES.HOME} />;
 
-  return <Form formValues={report} onSubmit={onSubmit} />;
+  const initialStep = getEditStep(report);
+
+  return <Form formValues={report} onSubmit={onSubmit} initialStep={initialStep} />;
 }
