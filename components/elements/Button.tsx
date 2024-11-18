@@ -21,8 +21,8 @@ export default function Button({
 
   const textStyles: Record<ButtonType, string> = {
     primary: 'text-slate-100 text-center',
-    secondary: 'font-bold text-indigo-300 text-center dark:text-indigo-200',
-    tertiary: 'font-bold text-slate-500 text-center dark:text-indigo-300',
+    secondary: 'font-bold text-indigo-300 text-center',
+    tertiary: 'font-bold text-indigo-500 text-center dark:text-indigo-300',
   };
 
   return (
