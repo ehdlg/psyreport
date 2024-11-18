@@ -1,4 +1,4 @@
-import { NewSelfReport } from './types';
+import { NewSelfReport, SelfReport } from './types';
 
 export const CURRENT_DATETIME = new Date(Date.now());
 
@@ -69,3 +69,13 @@ export const FORM_QUESTIONS: Record<keyof NewSelfReport, { title: string; placeh
   };
 
 export const INITAL_FORM_STEP = 0;
+
+export const FORM_STEP: Record<keyof SelfReport, number> = {
+  id: 0,
+  date: 0,
+  precedent: 1,
+  event: 2,
+  thoughts: 3,
+  reflections: 4,
+  otherActions: 5,
+};
