@@ -15,7 +15,7 @@ const Help = () => {
       <Text className='text-sm text-center text-normal text-slate-500 dark:text-slate-300'>
         ¿Necesitas conocer cómo funciona la app?
       </Text>
-      <Link href='/ayuda' className='text-sm text-center text-indigo-200'>
+      <Link href='/ayuda' className='text-sm text-center text-indigo-200 underline'>
         Infórmate en la sección de ayuda
       </Link>
     </View>
