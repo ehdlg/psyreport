@@ -14,7 +14,7 @@ export default function Layout() {
     <RootSiblingParent>
       <SafeAreaView edges={['top']} className='dark:bg-slate-800'>
         <Header />
-        <View className='gap-y-28 justify-start px-4 h-screen'>
+        <View className='gap-y-20 justify-start px-4 h-screen'>
           <Slot />
         </View>
       </SafeAreaView>
