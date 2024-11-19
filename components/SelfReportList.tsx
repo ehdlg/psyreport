@@ -3,6 +3,7 @@ import useGetSelfReports from '../hooks/useGetSelfReports';
 import { Text, View, FlatList } from 'react-native';
 import SelfReportCard from './SelfReportCard';
 import Button from './elements/Button';
+import GeneratePDF from './GeneratePDF';
 import EmptyFolder from './icons/EmptyFolder';
 import { ROUTES } from '../constants';
 import { deleteReport } from '../storage';
@@ -84,9 +85,13 @@ export default function SelfReportList() {
 
   return (
     <View>
-      <Text className='mb-4 text-2xl font-bold text-slate-800 dark:text-slate-200'>
-        Tus autorregistros
-      </Text>
+      <View className='flex-row justify-between items-start'>
+        <Text className='mb-4 text-2xl font-bold text-slate-800 dark:text-slate-200'>
+          Tus autorregistros
+        </Text>
+        <GeneratePDF selfReports={selfReports} />
+      </View>
+
       <FlatList
         data={selfReports}
         renderItem={({ item }) => (
