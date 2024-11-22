@@ -10,17 +10,28 @@ export const DEFAULT_DISCOMFORT_VALUE = Math.floor(DISCOMFORT_LIMITS.MAX / 2);
 
 export const DEFAULT_SELF_REPORT_VALUES: NewSelfReport = {
   date: CURRENT_DATETIME.toISOString(),
-  precedent: '',
+  precedent: {
+    audio: null,
+    text: null,
+  },
   event: {
     discomfort: DEFAULT_DISCOMFORT_VALUE,
-    text: '',
+    text: null,
+    audio: null,
   },
   reflections: {
     discomfort: DEFAULT_DISCOMFORT_VALUE,
-    text: '',
+    text: null,
+    audio: null,
   },
-  thoughts: '',
-  otherActions: '',
+  thoughts: {
+    text: null,
+    audio: null,
+  },
+  otherActions: {
+    text: null,
+    audio: null,
+  },
 };
 
 export const STORAGE_KEY = 'selfreports';
