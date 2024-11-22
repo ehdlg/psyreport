@@ -30,7 +30,7 @@ const Precedent = ({
       <ReportTextInput
         handleReportValue={handlePrecedent}
         placeholder={placeholder}
-        reportValue={precedentValue}
+        reportValue={precedentValue.text}
       />
     </QuestionWrapper>
   );
@@ -78,7 +78,7 @@ const Thought = ({
     <QuestionWrapper question={title}>
       <ReportTextInput
         handleReportValue={handleThought}
-        reportValue={thoughtValue}
+        reportValue={thoughtValue.text}
         placeholder={placeholder}
       />
     </QuestionWrapper>
@@ -124,7 +124,7 @@ const OtherPeopleActions = ({
     <QuestionWrapper question={title}>
       <ReportTextInput
         handleReportValue={handleOtherPeopleActions}
-        reportValue={otherPeopleActions}
+        reportValue={otherPeopleActions.text}
         placeholder={placeholder}
       />
     </QuestionWrapper>
@@ -217,7 +217,7 @@ export default function Form({
     <Form.DateTime formikDate={new Date(formik.values.date)} setFieldValue={updateReportField} />,
     <Form.Antedecent
       precedentValue={formik.values.precedent}
-      handlePrecedent={formik.handleChange('precedent')}
+      handlePrecedent={formik.handleChange('precedent.text')}
     />,
     <Form.Event
       handleEventText={formik.handleChange('event.text')}
