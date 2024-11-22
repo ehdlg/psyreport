@@ -1,17 +1,28 @@
 export type SelfReport = {
   id: number;
   date: string;
-  precedent: string;
+  precedent: {
+    text: string | null;
+    audio: string | null;
+  };
   event: {
     discomfort: number;
-    text: string;
+    text: string | null;
+    audio: string | null;
   };
-  thoughts: string;
+  thoughts: {
+    text: string | null;
+    audio: string | null;
+  };
   reflections: {
+    audio: string | null;
     discomfort: number | null;
     text: string | null;
   };
-  otherActions: string | null;
+  otherActions: {
+    audio: string | null;
+    text: string | null;
+  };
 };
 
 export type NewSelfReport = Omit<SelfReport, 'id'>;
