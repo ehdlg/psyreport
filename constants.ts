@@ -23,7 +23,7 @@ export const DEFAULT_SELF_REPORT_VALUES: NewSelfReport = {
   otherActions: '',
 };
 
-export const STORAGE_KEY = 'reports';
+export const STORAGE_KEY = 'selfreports';
 
 export const INITIAL_ID = 1;
 
