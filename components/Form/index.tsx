@@ -26,12 +26,11 @@ const Precedent = ({
 }) => {
   const { title, placeholder } = FORM_QUESTIONS.precedent;
   return (
-    <QuestionWrapper>
+    <QuestionWrapper question={title}>
       <ReportTextInput
         handleReportValue={handlePrecedent}
         placeholder={placeholder}
         reportValue={precedentValue}
-        title={title}
       />
     </QuestionWrapper>
   );
@@ -50,11 +49,10 @@ const Event = ({
   const { title, placeholder } = FORM_QUESTIONS.event;
 
   return (
-    <QuestionWrapper>
+    <QuestionWrapper question={title}>
       <ReportTextInput
         handleReportValue={handleEventText}
         reportValue={event.text}
-        title={title}
         placeholder={placeholder}
       />
       <View className='gap-y-2'>
@@ -77,9 +75,8 @@ const Thought = ({
   const { title, placeholder } = FORM_QUESTIONS.thoughts;
 
   return (
-    <QuestionWrapper>
+    <QuestionWrapper question={title}>
       <ReportTextInput
-        title={title}
         handleReportValue={handleThought}
         reportValue={thoughtValue}
         placeholder={placeholder}
@@ -99,9 +96,8 @@ const Reflection = ({
 }) => {
   const { title, placeholder } = FORM_QUESTIONS.reflections;
   return (
-    <QuestionWrapper>
+    <QuestionWrapper question={title}>
       <ReportTextInput
-        title={title}
         handleReportValue={handleReflectionText}
         reportValue={reflection.text}
         placeholder={placeholder}
@@ -125,9 +121,8 @@ const OtherPeopleActions = ({
   const { title, placeholder } = FORM_QUESTIONS.otherActions;
 
   return (
-    <QuestionWrapper>
+    <QuestionWrapper question={title}>
       <ReportTextInput
-        title={title}
         handleReportValue={handleOtherPeopleActions}
         reportValue={otherPeopleActions}
         placeholder={placeholder}
