@@ -93,13 +93,19 @@ export default function SelfReportCard({
           show ? 'block' : 'hidden'
         }`}
       >
-        <QuestionAnswer question={SELF_REPORT_QUESTIONS.precedent} answer={report.precedent} />
+        <QuestionAnswer
+          question={SELF_REPORT_QUESTIONS.precedent}
+          answer={report.precedent.text || 'Audio'}
+        />
         <QuestionAnswer
           question={SELF_REPORT_QUESTIONS.event}
-          answer={report.event.text}
+          answer={report.event.text || 'Audio'}
           discomfort={report.event.discomfort}
         />
-        <QuestionAnswer question={SELF_REPORT_QUESTIONS.thoughts} answer={report.thoughts} />
+        <QuestionAnswer
+          question={SELF_REPORT_QUESTIONS.thoughts}
+          answer={report.thoughts.text || 'Audio'}
+        />
         {report.reflections.text && (
           <QuestionAnswer
             question={SELF_REPORT_QUESTIONS.reflections}
@@ -110,7 +116,7 @@ export default function SelfReportCard({
         {report.otherActions && (
           <QuestionAnswer
             question={SELF_REPORT_QUESTIONS.otherActions}
-            answer={report.otherActions}
+            answer={report.otherActions.text || 'Audio'}
           />
         )}
       </View>
