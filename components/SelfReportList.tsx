@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import useGetSelfReports from '../hooks/useGetSelfReports';
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import SelfReportCard from './SelfReportCard';
 import Button from './elements/Button';
 import GeneratePDF from './GeneratePDF';
@@ -92,17 +92,18 @@ export default function SelfReportList() {
         <GeneratePDF selfReports={selfReports} />
       </View>
 
-      <FlatList
-        data={selfReports}
-        renderItem={({ item }) => (
-          <SelfReportCard
-            report={item}
-            key={item.id}
-            handleDelete={handleDelete}
-            handleEdit={handleEdit}
-          />
-        )}
-      />
+      <ScrollView>
+        {selfReports.map((selfReport) => {
+          return (
+            <SelfReportCard
+              report={selfReport}
+              handleDelete={handleDelete}
+              handleEdit={handleEdit}
+              key={selfReport.id}
+            />
+          );
+        })}
+      </ScrollView>
     </View>
   );
 }
