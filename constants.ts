@@ -90,3 +90,5 @@ export const FORM_STEP: Record<keyof SelfReport, number> = {
   reflections: 4,
   otherActions: 5,
 };
+
+export const AUDIO_DIR = 'audios/';
