@@ -1,4 +1,5 @@
 import { NewSelfReport, SelfReport } from './types';
+import { documentDirectory } from 'expo-file-system';
 
 export const CURRENT_DATETIME = new Date(Date.now());
 
@@ -91,4 +92,6 @@ export const FORM_STEP: Record<keyof SelfReport, number> = {
   otherActions: 5,
 };
 
-export const AUDIO_DIR = 'audios/';
+export const AUDIO_DIR = documentDirectory + 'audios/';
+
+export const AUDIO_EXTENSION = '.m4a';
