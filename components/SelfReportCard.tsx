@@ -61,7 +61,7 @@ export default function SelfReportCard({
         <View className='flex-row gap-x-4 items-center'>
           <TouchableOpacity
             onPress={() => {
-              Alert.alert('¿Quieres borrar el autorregistro?', 'Los cambios son irreversibles', [
+              Alert.alert('¿Borrar autorregistro?', 'Los cambios son irreversibles', [
                 {
                   style: 'cancel',
                   text: 'Cancelar',
