@@ -1,4 +1,5 @@
-import { INITAL_FORM_STEP, FORM_STEP } from '../constants';
+import { moveAsync } from 'expo-file-system';
+import { INITAL_FORM_STEP, FORM_STEP, AUDIO_DIR, AUDIO_EXTENSION } from '../constants';
 import { SelfReport } from '../types';
 
 export function formatDateWithTime(date: Date) {

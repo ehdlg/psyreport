@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { INITIAL_ID, STORAGE_KEY } from '../constants';
+import { moveAsync } from 'expo-file-system';
+import { INITIAL_ID, STORAGE_KEY, AUDIO_DIR, AUDIO_EXTENSION } from '../constants';
 import { FormValues, NewSelfReport, SelfReport } from '../types';
 
 // TODO: better error handling
@@ -86,5 +87,15 @@ export const editReport = async (id: number, newValues: FormValues) => {
     await setReports(savedReports);
   } catch (error) {
     throw error;
+  }
+};
+
+export const saveAudio = async ({ from, fileName }: { from: string; fileName: string }) => {
+  try {
+    const to = `${AUDIO_DIR}/${fileName}${AUDIO_EXTENSION}`;
+
+    await moveAsync({ from, to });
+  } catch (_error) {
+    throw new Error('No se pudo guardar el archivo');
   }
 };
