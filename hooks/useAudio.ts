@@ -37,8 +37,5 @@ export default function useAudio(uri: string | null) {
     await audio.playAsync();
   };
 
-  // TODO remove audio from file system
-  const clearAudio = () => setAudio(null);
-
-  return { play, error, isLoading, clearAudio, audioReady: null != audio && !isLoading };
+  return { play, error, isLoading, audioReady: null != audio && !isLoading };
 }
