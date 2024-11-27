@@ -1,7 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { moveAsync, deleteAsync } from 'expo-file-system';
 import { INITIAL_ID, STORAGE_KEY, AUDIO_DIR, AUDIO_EXTENSION } from '../constants';
-import { FormValues, NewSelfReport, SelfReport } from '../types';
+import {
+  FormValues,
+  NewSelfReport,
+  SelfReport,
+  TextAndAudioField,
+  isTextAndAudioField,
+} from '../types';
 
 // TODO: better error handling
 
@@ -45,14 +51,33 @@ export const generateId = (reports: SelfReport[] | undefined) => {
   return reports[reports.length - 1].id + 1;
 };
 
+export const processAudioFiles = async (values: SelfReport): Promise<SelfReport> => {
+  const { id } = values;
+  const processedValues = { ...values };
+
+  for (const [key, value] of Object.entries(values)) {
+    if (!isTextAndAudioField(value) || null == value.audio || value.audio.includes(AUDIO_DIR))
+      continue;
+
+    const fileName = `${key}-${id}`;
+    const from = value.audio;
+
+    const to = await saveAudio({ from, fileName });
+
+    (processedValues[key as keyof SelfReport] as TextAndAudioField).audio = to;
+  }
+
+  return processedValues;
+};
+
 export const saveReport = async (newReport: NewSelfReport) => {
   try {
     const reports = await getReports();
-
-    if (null == reports) return;
-
     const reportId = generateId(reports);
-    const report: SelfReport = { ...newReport, id: reportId };
+    const rawReport: SelfReport = { ...newReport, id: reportId };
+
+    const report = await processAudioFiles(rawReport);
+
     const newReports = [...reports, report];
 
     await setReports(newReports);
@@ -82,7 +107,11 @@ export const editReport = async (id: number, newValues: FormValues) => {
 
     if (reportIndex === -1) throw new Error('Autorregistro no encontrado');
 
-    savedReports[reportIndex] = { ...savedReports[reportIndex], ...newValues };
+    const rawReport = { ...savedReports[reportIndex], ...newValues };
+
+    const editedReport = await processAudioFiles(rawReport);
+
+    savedReports[reportIndex] = editedReport;
 
     await setReports(savedReports);
   } catch (error) {
