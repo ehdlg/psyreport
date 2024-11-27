@@ -23,7 +23,6 @@ export type SelfReport = {
   otherActions: TextAndAudioField;
 };
 
-
 export type NewSelfReport = Omit<SelfReport, 'id'>;
 
 export type ButtonType = 'primary' | 'secondary' | 'tertiary';
@@ -32,5 +31,12 @@ export type StepIndicatorStatus = 'current' | 'done' | 'todo';
 
 export type FormValues = Omit<SelfReport, 'id'> & Partial<Pick<SelfReport, 'id'>>;
 
-
-const isAudioField = (value: any) => value is AudioField
+export const isTextAndAudioField = (value: any): value is TextAndAudioField => {
+  return (
+    value &&
+    typeof value === 'object' &&
+    'audio' in value &&
+    typeof value.audio === 'string' &&
+    'text' in value
+  );
+};
