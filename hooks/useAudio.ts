@@ -5,10 +5,14 @@ export default function useAudio(uri: string | null) {
   const [audio, setAudio] = useState<Audio.Sound | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentUri, setCurrentUri] = useState<string | null>(null);
 
   const getAudio = useCallback(async () => {
+    if (null !== uri && uri === currentUri) return;
+
     setIsLoading(true);
     setError(null);
+    setCurrentUri(uri);
     try {
       if (null == uri) {
         setAudio(null);
@@ -25,7 +29,7 @@ export default function useAudio(uri: string | null) {
     } finally {
       setIsLoading(false);
     }
-  }, [uri]);
+  }, [uri, currentUri]);
 
   useEffect(() => {
     getAudio();
