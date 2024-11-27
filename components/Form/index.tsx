@@ -9,7 +9,7 @@ import QuestionWrapper from './QuestionWrapper';
 import DateTime from './DateTime';
 import Control from './Control';
 import ProgressBar from './ProgressBar';
-import ReportAudio from './ReportAudio';
+import ReportAudioInput from './ReportAudioInput';
 import { validate } from './validation';
 import {
   DEFAULT_DISCOMFORT_VALUE,
@@ -37,7 +37,7 @@ const Precedent = ({
   return (
     <QuestionWrapper question={title}>
       {isRecord ? (
-        <ReportAudio handleAudioUri={handleAudioUri} audioUri={audioUri} />
+        <ReportAudioInput handleAudioUri={handleAudioUri} audioUri={audioUri} />
       ) : (
         <ReportTextInput
           handleReportValue={handlePrecedent}
@@ -70,7 +70,7 @@ const Event = ({
   return (
     <QuestionWrapper question={title}>
       {isRecord ? (
-        <ReportAudio audioUri={audioUri} handleAudioUri={handleAudioUri} />
+        <ReportAudioInput audioUri={audioUri} handleAudioUri={handleAudioUri} />
       ) : (
         <ReportTextInput
           handleReportValue={handleEventText}
@@ -107,7 +107,7 @@ const Thought = ({
   return (
     <QuestionWrapper question={title}>
       {isRecord ? (
-        <ReportAudio audioUri={audioUri} handleAudioUri={handleAudioUri} />
+        <ReportAudioInput audioUri={audioUri} handleAudioUri={handleAudioUri} />
       ) : (
         <ReportTextInput
           handleReportValue={handleThought}
@@ -138,7 +138,7 @@ const Reflection = ({
   return (
     <QuestionWrapper question={title}>
       {isRecord ? (
-        <ReportAudio audioUri={audioUri} handleAudioUri={handleAudioUri} />
+        <ReportAudioInput audioUri={audioUri} handleAudioUri={handleAudioUri} />
       ) : (
         <ReportTextInput
           handleReportValue={handleReflectionText}
@@ -172,7 +172,7 @@ const OtherPeopleActions = ({
   return (
     <QuestionWrapper question={title}>
       {isRecord ? (
-        <ReportAudio audioUri={audioUri} handleAudioUri={handleAudioUri} />
+        <ReportAudioInput audioUri={audioUri} handleAudioUri={handleAudioUri} />
       ) : (
         <ReportTextInput
           handleReportValue={handleOtherPeopleActions}
@@ -276,7 +276,6 @@ export default function Form({
       formik.setFieldValue(field, newUri);
     };
   };
-  console.log(formik.values);
 
   const formOrder = [
     <Form.DateTime formikDate={new Date(formik.values.date)} setFieldValue={updateReportField} />,
