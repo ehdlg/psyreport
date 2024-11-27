@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { moveAsync } from 'expo-file-system';
+import { moveAsync, deleteAsync } from 'expo-file-system';
 import { INITIAL_ID, STORAGE_KEY, AUDIO_DIR, AUDIO_EXTENSION } from '../constants';
 import { FormValues, NewSelfReport, SelfReport } from '../types';
 
@@ -97,5 +97,13 @@ export const saveAudio = async ({ from, fileName }: { from: string; fileName: st
     await moveAsync({ from, to });
   } catch (_error) {
     throw new Error('No se pudo guardar el archivo');
+  }
+};
+
+export const deleteAudio = async (fileUri: string) => {
+  try {
+    await deleteAsync(fileUri);
+  } catch (_error) {
+    throw new Error('No se pudo borrar el audio');
   }
 };
