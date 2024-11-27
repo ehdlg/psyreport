@@ -95,6 +95,8 @@ export const saveAudio = async ({ from, fileName }: { from: string; fileName: st
     const to = `${AUDIO_DIR}/${fileName}${AUDIO_EXTENSION}`;
 
     await moveAsync({ from, to });
+
+    return to;
   } catch (_error) {
     throw new Error('No se pudo guardar el archivo');
   }
