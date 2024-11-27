@@ -32,3 +32,5 @@ export type ButtonType = 'primary' | 'secondary' | 'tertiary';
 export type StepIndicatorStatus = 'current' | 'done' | 'todo';
 
 export type FormValues = Omit<SelfReport, 'id'> & Partial<Pick<SelfReport, 'id'>>;
+
+export type AudioUri = string | null;
