@@ -1,29 +1,28 @@
+export type AudioUri = string | null;
+
+export type TextAndAudioField = {
+  text: string | null;
+  audio: AudioUri;
+};
+
 export type SelfReport = {
   id: number;
   date: string;
-  precedent: {
-    text: string | null;
-    audio: string | null;
-  };
+  precedent: TextAndAudioField;
   event: {
     discomfort: number;
     text: string | null;
-    audio: string | null;
+    audio: AudioUri;
   };
-  thoughts: {
-    text: string | null;
-    audio: string | null;
-  };
+  thoughts: TextAndAudioField;
   reflections: {
-    audio: string | null;
+    audio: AudioUri;
     discomfort: number | null;
     text: string | null;
   };
-  otherActions: {
-    audio: string | null;
-    text: string | null;
-  };
+  otherActions: TextAndAudioField;
 };
+
 
 export type NewSelfReport = Omit<SelfReport, 'id'>;
 
@@ -33,4 +32,5 @@ export type StepIndicatorStatus = 'current' | 'done' | 'todo';
 
 export type FormValues = Omit<SelfReport, 'id'> & Partial<Pick<SelfReport, 'id'>>;
 
-export type AudioUri = string | null;
+
+const isAudioField = (value: any) => value is AudioField
