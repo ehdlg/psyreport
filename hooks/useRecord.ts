@@ -1,10 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Audio } from 'expo-av';
 import { RecordingOptionsPresets } from 'expo-av/build/Audio';
 
 export default function useRecord() {
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [isRecording, setIsRecording] = useState<boolean>(false);
+
+  useEffect(() => {
+    return () => {
+      if (null == recording) return;
+
+      recording.getStatusAsync().then(({ isDoneRecording }) => {
+        if (isDoneRecording) return;
+
+        recording.stopAndUnloadAsync();
+      });
+    };
+  }, [recording]);
 
   const startRecording = async () => {
     try {
