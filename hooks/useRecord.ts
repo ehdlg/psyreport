@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Audio } from 'expo-av';
 import { RecordingOptionsPresets } from 'expo-av/build/Audio';
+import { useMicroStatus } from '../store';
 
 export default function useRecord() {
   const [recording, setRecording] = useState<Audio.Recording | null>(null);
   const [isRecording, setIsRecording] = useState<boolean>(false);
+  const { setMicroStatus } = useMicroStatus();
 
   useEffect(() => {
     return () => {
@@ -13,10 +15,20 @@ export default function useRecord() {
       recording.getStatusAsync().then(({ isDoneRecording }) => {
         if (isDoneRecording) return;
 
-        recording.stopAndUnloadAsync();
+        recording.stopAndUnloadAsync().finally(() => {
+          setRecording(null);
+          setMicroStatus(false);
+        });
       });
     };
-  }, [recording]);
+  }, [recording, setMicroStatus]);
+
+  useEffect(
+    function updateMicroStatus() {
+      setMicroStatus(isRecording);
+    },
+    [isRecording, setMicroStatus]
+  );
 
   const startRecording = async () => {
     try {
