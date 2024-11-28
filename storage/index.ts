@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { moveAsync, deleteAsync } from 'expo-file-system';
+import { moveAsync, deleteAsync, getInfoAsync, makeDirectoryAsync } from 'expo-file-system';
 import { INITIAL_ID, STORAGE_KEY, AUDIO_DIR, AUDIO_EXTENSION } from '../constants';
 import {
   FormValues,
@@ -123,6 +123,7 @@ export const saveAudio = async ({ from, fileName }: { from: string; fileName: st
   try {
     const to = `${AUDIO_DIR}/${fileName}${AUDIO_EXTENSION}`;
 
+    await createDirIfNeeded(AUDIO_DIR);
     await moveAsync({ from, to });
 
     return to;
@@ -137,4 +138,12 @@ export const deleteAudio = async (fileUri: string) => {
   } catch (_error) {
     throw new Error('No se pudo borrar el audio');
   }
+};
+
+const createDirIfNeeded = async (dir: string) => {
+  const dirInfo = await getInfoAsync(dir);
+
+  if (dirInfo.exists) return;
+
+  await makeDirectoryAsync(dir, { intermediates: true });
 };
