@@ -92,6 +92,6 @@ export const FORM_STEP: Record<keyof SelfReport, number> = {
   otherActions: 5,
 };
 
-export const AUDIO_DIR = documentDirectory + 'audios/';
+export const AUDIO_DIR = documentDirectory + 'audios';
 
 export const AUDIO_EXTENSION = '.m4a';
