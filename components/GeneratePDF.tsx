@@ -1,10 +1,9 @@
 import { printToFileAsync } from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import Button from './elements/Button';
-import Toast from 'react-native-root-toast';
 import { SelfReport } from '../types';
-import { FORM_QUESTIONS } from '../constants';
-import { formatDateWithTime } from '../utils';
+import { DEFAULT_AUDIO_MESSAGE, FORM_QUESTIONS } from '../constants';
+import { formatDateWithTime, showToast } from '../utils';
 
 const renderSection = (title: string, content: string | null, discomfort: number | null) => {
   if (content) {
@@ -24,21 +23,33 @@ const generateHTMLContentForSelfReport = (selfReport: SelfReport) => {
     <div class="selfReport">
       <h1 class="title">Autorregistro: ${formatDateWithTime(new Date(selfReport.date))}</h1>
 
-      ${renderSection(FORM_QUESTIONS.precedent.title, selfReport.precedent, null)}  
+      ${renderSection(
+        FORM_QUESTIONS.precedent.title,
+        selfReport.precedent.text || DEFAULT_AUDIO_MESSAGE,
+        null
+      )}  
       ${renderSection(
         FORM_QUESTIONS.event.title,
-        selfReport.event.text,
+        selfReport.event.text || DEFAULT_AUDIO_MESSAGE,
         selfReport.event.discomfort
       )}
 
-      ${renderSection(FORM_QUESTIONS.thoughts.title, selfReport.thoughts, null)}
+      ${renderSection(
+        FORM_QUESTIONS.thoughts.title,
+        selfReport.thoughts.text || DEFAULT_AUDIO_MESSAGE,
+        null
+      )}
       ${renderSection(
         FORM_QUESTIONS.reflections.title,
-        selfReport.reflections.text,
+        selfReport.reflections.text || DEFAULT_AUDIO_MESSAGE,
         selfReport.reflections.discomfort
       )}
 
-      ${renderSection(FORM_QUESTIONS.otherActions.title, selfReport.otherActions, null)}
+      ${renderSection(
+        FORM_QUESTIONS.otherActions.title,
+        selfReport.otherActions.text || DEFAULT_AUDIO_MESSAGE,
+        null
+      )}
     </div>
   `;
 };
@@ -88,9 +99,7 @@ export default function GeneratePDF({ selfReports }: { selfReports: SelfReport[]
 
       await shareAsync(file.uri, { mimeType: 'application/pdf' });
     } catch (_error) {
-      Toast.show('No se pudo generar el archivo PDF', {
-        duration: Toast.durations.SHORT,
-      });
+      showToast({ message: 'No se pudo generar el archivo PDF', type: 'error' });
     }
   };
   return <Button type='primary' title='Generar PDF' onPress={generatePdf} />;

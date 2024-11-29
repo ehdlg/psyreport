@@ -124,3 +124,5 @@ export const TOAST_OPTIONS: Record<ToastType, ToastOptions> = {
     textColor: '#6366f1',
   },
 };
+
+export const DEFAULT_AUDIO_MESSAGE = 'Respuesta en formato audio';
