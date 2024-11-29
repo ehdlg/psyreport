@@ -31,6 +31,8 @@ export type StepIndicatorStatus = 'current' | 'done' | 'todo';
 
 export type FormValues = Omit<SelfReport, 'id'> & Partial<Pick<SelfReport, 'id'>>;
 
+export type ToastType = 'success' | 'warning' | 'error';
+
 export const isTextAndAudioField = (value: any): value is TextAndAudioField => {
   return (
     value &&
