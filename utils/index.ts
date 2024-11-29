@@ -1,6 +1,6 @@
-import { moveAsync } from 'expo-file-system';
-import { INITAL_FORM_STEP, FORM_STEP, AUDIO_DIR, AUDIO_EXTENSION } from '../constants';
-import { SelfReport } from '../types';
+import Toast from 'react-native-root-toast';
+import { INITAL_FORM_STEP, FORM_STEP, TOAST_OPTIONS } from '../constants';
+import { SelfReport, ToastType } from '../types';
 
 export function formatDateWithTime(date: Date) {
   const day = String(date.getDate()).padStart(2, '0');
@@ -25,3 +25,9 @@ export function getEditStep(report: SelfReport) {
 
   return INITAL_FORM_STEP;
 }
+
+export const showToast = ({ message, type }: { message: string; type: ToastType }) => {
+  const toastOptions = TOAST_OPTIONS[type];
+
+  Toast.show(message, toastOptions);
+};
