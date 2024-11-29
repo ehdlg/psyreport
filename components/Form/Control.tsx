@@ -1,5 +1,8 @@
 import { View } from 'react-native';
 import Button from '../elements/Button';
+import { useMicroStatus } from '../../store';
+import { showToast } from '../../utils';
+import { useCallback } from 'react';
 
 export default function Control({
   step,
@@ -14,15 +17,33 @@ export default function Control({
   };
   stepLimits: { MIN: number; MAX: number };
 }) {
+  const { isUsingMicro } = useMicroStatus();
+
+  const warningMicro = useCallback(() => {
+    showToast({ message: 'Finaliza el audio antes de cambiar de sección', type: 'warning' });
+  }, []);
+
   return (
     <View className='flex-row justify-around p-4 rounded-b-xl bg-slate-50 dark:bg-slate-700/20'>
       {step > stepLimits.MIN && (
-        <Button type='secondary' title='Anterior' onPress={formControl.prev} />
+        <Button
+          type='secondary'
+          title='Anterior'
+          onPress={isUsingMicro ? warningMicro : formControl.prev}
+        />
       )}
       {step === stepLimits.MAX ? (
-        <Button type='primary' title='Enviar' onPress={formControl.end} />
+        <Button
+          type='primary'
+          title='Enviar'
+          onPress={isUsingMicro ? warningMicro : formControl.end}
+        />
       ) : (
-        <Button type='secondary' title='Siguiente' onPress={formControl.next} />
+        <Button
+          type='secondary'
+          title='Siguiente'
+          onPress={isUsingMicro ? warningMicro : formControl.next}
+        />
       )}
     </View>
   );
