@@ -1,4 +1,5 @@
-import { NewSelfReport, SelfReport } from './types';
+import Toast, { ToastOptions } from 'react-native-root-toast';
+import { NewSelfReport, SelfReport, ToastType } from './types';
 import { documentDirectory } from 'expo-file-system';
 
 export const CURRENT_DATETIME = new Date(Date.now());
@@ -95,3 +96,24 @@ export const FORM_STEP: Record<keyof SelfReport, number> = {
 export const AUDIO_DIR = documentDirectory + 'audios';
 
 export const AUDIO_EXTENSION = '.m4a';
+
+export const TOAST_OPTIONS: Record<ToastType, ToastOptions> = {
+  warning: {
+    duration: Toast.durations.SHORT,
+    backgroundColor: '#fef3c7',
+    textColor: '#f59e0b',
+    animation: true,
+  },
+  success: {
+    duration: Toast.durations.SHORT,
+    backgroundColor: '#dcfce7',
+    textColor: '#22c55e',
+    animation: true,
+  },
+  error: {
+    duration: Toast.durations.SHORT,
+    backgroundColor: '#fecaca',
+    textColor: '#ef4444',
+    animation: true,
+  },
+};
