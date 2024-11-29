@@ -97,23 +97,30 @@ export const AUDIO_DIR = documentDirectory + 'audios';
 
 export const AUDIO_EXTENSION = '.m4a';
 
+export const DEFAULT_TOAST_OPTIONS: ToastOptions = {
+  duration: Toast.durations.SHORT,
+  animation: true,
+};
+
 export const TOAST_OPTIONS: Record<ToastType, ToastOptions> = {
   warning: {
-    duration: Toast.durations.SHORT,
+    ...DEFAULT_TOAST_OPTIONS,
     backgroundColor: '#fef3c7',
     textColor: '#f59e0b',
-    animation: true,
   },
   success: {
-    duration: Toast.durations.SHORT,
+    ...DEFAULT_TOAST_OPTIONS,
     backgroundColor: '#dcfce7',
     textColor: '#22c55e',
-    animation: true,
   },
   error: {
-    duration: Toast.durations.SHORT,
+    ...DEFAULT_TOAST_OPTIONS,
     backgroundColor: '#fecaca',
     textColor: '#ef4444',
-    animation: true,
+  },
+  info: {
+    ...DEFAULT_TOAST_OPTIONS,
+    backgroundColor: '#e0e7ff',
+    textColor: '#6366f1',
   },
 };
