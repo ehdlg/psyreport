@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from 'react';
 import { useFormik } from 'formik';
-import Toast from 'react-native-root-toast';
 import { View } from 'react-native';
 import Button from '../elements/Button';
 import ReportTextInput from './ReportTextInput';
@@ -18,6 +17,7 @@ import {
   INITAL_FORM_STEP,
 } from '../../constants';
 import { AudioUri, FormValues } from '../../types';
+import { showToast } from '../../utils';
 
 const Precedent = ({
   precedentValue,
@@ -235,12 +235,7 @@ export default function Form({
     Object.values(formik.errors).map((error) => {
       const errorMessage = typeof error === 'string' ? error : String(error);
 
-      Toast.show(errorMessage, {
-        duration: Toast.durations.SHORT,
-        backgroundColor: '#fecaca',
-        textColor: '#ef4444',
-        animation: true,
-      });
+      showToast({ message: errorMessage, type: 'error' });
 
       formik.setErrors({});
     });

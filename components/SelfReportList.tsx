@@ -8,8 +8,9 @@ import EmptyFolder from './icons/EmptyFolder';
 import { ROUTES } from '../constants';
 import { deleteReport } from '../storage';
 import { useCallback } from 'react';
-import Toast, { ToastOptions } from 'react-native-root-toast';
 import Loading from './Loading';
+import { showToast } from '../utils';
+import { ToastType } from '../types';
 
 const Empty = () => {
   const handleRedirect = () => {
@@ -42,11 +43,7 @@ export default function SelfReportList() {
   const handleDelete = useCallback(
     async (id: number) => {
       let toastMessage: string = '';
-      let toastOptions: ToastOptions = {
-        duration: Toast.durations.SHORT,
-        animation: true,
-        position: Toast.positions.BOTTOM,
-      };
+      let toastOptions: ToastType = 'info';
       try {
         await deleteReport(id);
 
@@ -59,15 +56,9 @@ export default function SelfReportList() {
             ? error.message
             : 'Hubo un error al intentar borrar el autorregistro';
 
-        toastOptions = {
-          ...toastOptions,
-          duration: Toast.durations.SHORT,
-          backgroundColor: '#fecaca',
-          textColor: '#ef4444',
-          animation: true,
-        };
+        toastOptions = 'error';
       } finally {
-        Toast.show(toastMessage, toastOptions);
+        showToast({ message: toastMessage, type: toastOptions });
       }
     },
     [refreshSelfReports]

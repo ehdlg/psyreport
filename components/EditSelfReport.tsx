@@ -3,12 +3,11 @@ import { router, useLocalSearchParams, Redirect } from 'expo-router';
 import { Text } from 'react-native';
 import Form from './Form';
 import Loading from './Loading';
-import Toast from 'react-native-root-toast';
 import useGetSelfReport from '../hooks/useGetSelfReport';
 import { ROUTES } from '../constants';
 import { editReport } from '../storage';
 import { FormValues } from '../types';
-import { getEditStep } from '../utils';
+import { getEditStep, showToast } from '../utils';
 
 export default function EditSelfReport() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -17,10 +16,7 @@ export default function EditSelfReport() {
     async (values: FormValues) => {
       await editReport(+id, values);
 
-      Toast.show('Autorregistro editado correctamente', {
-        duration: Toast.durations.SHORT,
-        position: Toast.positions.BOTTOM,
-      });
+      showToast({ message: 'Autorregistro editado correctamente', type: 'success' });
 
       router.navigate(ROUTES.REPORTS);
     },
