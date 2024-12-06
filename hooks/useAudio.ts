@@ -38,7 +38,7 @@ export default function useAudio(uri: string | null) {
   const play = async () => {
     if (null == audio) return;
 
-    await audio.playAsync();
+    await audio.playFromPositionAsync(0);
   };
 
   return { play, error, isLoading, audioReady: null != audio && !isLoading };
