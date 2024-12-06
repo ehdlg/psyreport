@@ -18,8 +18,7 @@ export default function Control({
   stepLimits: { MIN: number; MAX: number };
 }) {
   const { isUsingMicro } = useMicroStatus();
-
-  const warningMicro = useCallback(() => {
+  const showMicroWarning = useCallback(() => {
     showToast({ message: 'Finaliza el audio antes de cambiar de sección', type: 'warning' });
   }, []);
 
@@ -29,20 +28,20 @@ export default function Control({
         <Button
           type='secondary'
           title='Anterior'
-          onPress={isUsingMicro ? warningMicro : formControl.prev}
+          onPress={isUsingMicro ? showMicroWarning : formControl.prev}
         />
       )}
       {step === stepLimits.MAX ? (
         <Button
           type='primary'
           title='Enviar'
-          onPress={isUsingMicro ? warningMicro : formControl.end}
+          onPress={isUsingMicro ? showMicroWarning : formControl.end}
         />
       ) : (
         <Button
           type='secondary'
           title='Siguiente'
-          onPress={isUsingMicro ? warningMicro : formControl.next}
+          onPress={isUsingMicro ? showMicroWarning : formControl.next}
         />
       )}
     </View>
